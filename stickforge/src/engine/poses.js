@@ -93,6 +93,10 @@ export const CLIPS = {
     desc: 'sentado (numa cadeira/banco/chão)', loop: true,
     fn: (t) => ({ dy: 0.2, lF: [88, 88], lB: [84, 88], aF: [30, 55], aB: [20, 50], lean: -1, head: S(t * 1) * 1.5 }),
   },
+  sleep: {
+    desc: 'adormece sentado, com a cabeça a pender suavemente', loop: true,
+    fn: (t) => ({ dy: 0.2 + S(t * 0.55) * 0.003, lF: [88, 88], lB: [84, 88], aF: [24, 48], aB: [18, 46], lean: 3, head: 16 + S(t * 0.55) * 3 }),
+  },
   type: {
     desc: 'sentado a escrever no portátil/computador', loop: true,
     fn: (t) => ({ dy: 0.2, lF: [88, 88], lB: [84, 88], lean: 6, aF: [58 + S(t * 14) * 4, 52], aB: [50 + S(t * 14 + 2) * 4, 55], head: 3 }),

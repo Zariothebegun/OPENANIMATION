@@ -41,6 +41,7 @@ export function normalizeProject(raw) {
       if (a.x !== undefined && typeof a.x === 'number' && Math.abs(a.x) > 12) warnings.push(`${ap}.x=${a.x}: parece fracção/valor grande; em 3D x é em metros (−3..3 é o habitual)`);
       if (a.toward !== undefined && a.toward !== a.id && !s.actors.some((o) => o.id === a.toward)) errors.push(`${ap}.toward: actor "${a.toward}" não existe nesta cena. Actores: ${s.actors.map((o) => o.id).join(', ')}`);
       if (a.from !== undefined && (typeof a.from !== 'object' || typeof a.from.x !== 'number')) errors.push(`${ap}.from: deve ser {x, z} em metros (ponto de onde a personagem entra a andar)`);
+      if (a.from && a.from.y !== undefined && typeof a.from.y !== 'number') errors.push(`${ap}.from.y: deve ser um número em metros`);
       if (a.enter !== undefined && typeof a.enter !== 'number') errors.push(`${ap}.enter: segundos (número)`);
     });
     const pids = new Set();

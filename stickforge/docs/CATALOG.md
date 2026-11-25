@@ -62,6 +62,7 @@
 - `celebrate` — braços no ar a saltar de alegria
 - `dance` — a dançar
 - `sit` — sentado (numa cadeira/banco/chão)
+- `sleep` — adormece sentado, com a cabeça a pender suavemente
 - `type` — sentado a escrever no portátil/computador
 - `scared` — assustado a tremer
 - `angry` — zangado, punhos fechados a tremer
@@ -245,20 +246,27 @@
 - `cabin_night` — cabin · interior
 - `river` — river · golden
 - `riverbank` — river · day
-- `plaza_night` — street · night
+- `plaza` — plaza · day
+- `plaza_night` — plaza · night
 - `city_day` — street · day
-- `western` — street · golden
+- `western` — desert · golden
 - `alley_night` — street · night
-- `room` — cabin · interior
-- `classroom` — cabin · interior
-- `clinic` — cabin · interior
-- `tech_hall` — cabin · interior
-- `desert_dusk` — mountain · dusk
-- `ruins` — mountain · golden
-- `ocean` — river · day
+- `room` — livingroom · interior
+- `bedroom` — bedroom · night
+- `living_room` — livingroom · interior
+- `livingroom` — livingroom · interior
+- `kitchen` — kitchen · interior
+- `classroom` — livingroom · interior
+- `clinic` — clinic · interior
+- `tech_hall` — clinic · interior
+- `desert` — desert · day
+- `desert_dusk` — desert · dusk
+- `ruins` — ruins · golden
+- `ocean` — ocean · day
 - `space` — mountain · night
 - `waterfall` — river · day
-- `snow_field` — mountain · night
+- `snow` — snow · day
+- `snow_field` — snow · night
 - `porch_night` — cabin · interior
 - `body_tunnel` — cabin · organ
 - `organ_cave` — cabin · organ

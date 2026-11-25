@@ -23,7 +23,9 @@ function evalOrbit(plan, f, o, t) {
 const pair = (v, i) => (Array.isArray(v) ? v[i] : v);
 export function normalizeCam3(c, dur) {
   if (!c) return null;
-  if (Array.isArray(c)) return { keys: c.map((k) => ({ ...k, t: typeof k.t === 'string' && k.t.endsWith('%') ? (parseFloat(k.t) / 100) * dur : k.t === 'end' ? dur : k.t ?? 0 })).sort((a, b) => a.t - b.t), shake: 0 };
+  const parseT = (t) => typeof t === 'string' && t.endsWith('%') ? (parseFloat(t) / 100) * dur : t === 'end' ? dur : t ?? 0;
+  if (Array.isArray(c)) return { keys: c.map((k) => ({ ...k, t: parseT(k.t) })).sort((a, b) => a.t - b.t), shake: 0 };
+  if (Array.isArray(c.keys)) return { keys: c.keys.map((k) => ({ ...k, t: parseT(k.t) })).sort((a, b) => a.t - b.t), shake: c.shake ?? 0 };
   const keys = [];
   if (c.orbit || c.focus !== undefined) {
     const f = c.focus === undefined ? '*' : c.focus, o = c.orbit || {};
@@ -46,7 +48,9 @@ function camAt0(plan, t) {
   const c = plan.cam3; if (!c || !c.keys.length) return { pos: [0, 1.7, 6], look: [0, 1.5, 0], fov: 46 };
   const ks = c.keys; let i = 0; while (i + 1 < ks.length && t >= ks[i + 1].t) i++;
   const a = ks[i], b = ks[Math.min(i + 1, ks.length - 1)]; let r;
-  if (a === b || t <= a.t) r = evalKey(plan, a, t);
+  // A target key marked `cut` starts a new shot. Keep the previous composition
+  // unchanged until that timestamp instead of interpolating through the edit.
+  if (a === b || t <= a.t || (b.cut && t < b.t)) r = evalKey(plan, a, t);
   else {
     const k = clamp((t - a.t) / Math.max(1e-6, b.t - a.t), 0, 1), u = (ease[b.ease || a.ease || 'smooth'] || ease.smooth)(k);
     if (a.orbit && b.orbit && JSON.stringify(a.orbit.focus) === JSON.stringify(b.orbit.focus)) { const A = O(a.orbit), B = O(b.orbit); r = evalOrbit(plan, a.orbit.focus, { r: lerp(A.r, B.r, u), az: lerp(A.az, B.az, u), el: lerp(A.el, B.el, u), h: lerp(A.h, B.h, u), fov: lerp(A.fov, B.fov, u), dx: lerp(A.dx, B.dx, u) }, t); }

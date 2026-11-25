@@ -34,16 +34,17 @@ export const OPEN_MOUTH = { neutral: 'smile', smile_closed: 'grin', smile: 'grin
 
 // DSL acts (poses/clips) -> gesture preset (cast3.ts gestPose)
 export const ACT_MAP = Object.assign({ idle: 'idle', talk: 'talk', present: 'present', point: 'point', shrug: 'shrug', think: 'think', wave: 'wave', hold: 'hold', celebrate: 'cheer', cheer: 'cheer', jump: 'cheer', recoil: 'recoil', scared: 'recoil',
-  shock: 'recoil', explain: 'present', lookup: 'lookup', clap: 'cheer', cry: 'think', facepalm: 'think', read: 'hold', write: 'hold', type: 'hold', walk: 'idle', run: 'idle' }, LOCAL.acts || {});
+  shock: 'recoil', explain: 'present', lookup: 'lookup', clap: 'cheer', cry: 'think', facepalm: 'think', read: 'hold', write: 'hold', type: 'hold', sit: 'sit', sleep: 'sleep', walk: 'idle', run: 'idle' }, LOCAL.acts || {});
 
 // DSL backgrounds -> cinema kit + light  (kit names are the old set3d kits; new names pass through)
 export const KIT_MAP = Object.assign({
   street: ['street', 'day'], forest: ['forest', 'day'], forest_night: ['forest', 'night'], clearing: ['forest', 'golden'], forest_clearing: ['forest', 'golden'],
   mountain: ['mountain', 'golden'], mountain_pass: ['mountain', 'day'], cabin: ['cabin', 'interior'], cabin_night: ['cabin', 'interior'], river: ['river', 'golden'], riverbank: ['river', 'day'],
-  plaza_night: ['street', 'night'], city_day: ['street', 'day'], western: ['street', 'golden'], alley_night: ['street', 'night'],
-  room: ['cabin', 'interior'], classroom: ['cabin', 'interior'], clinic: ['cabin', 'interior'], tech_hall: ['cabin', 'interior'],
-  desert_dusk: ['mountain', 'dusk'], ruins: ['mountain', 'golden'], ocean: ['river', 'day'], space: ['mountain', 'night'], waterfall: ['river', 'day'],
-  snow_field: ['mountain', 'night'], porch_night: ['cabin', 'interior'], body_tunnel: ['cabin', 'organ'], organ_cave: ['cabin', 'organ'],
+  plaza: ['plaza', 'day'], plaza_night: ['plaza', 'night'], city_day: ['street', 'day'], western: ['desert', 'golden'], alley_night: ['street', 'night'],
+  room: ['livingroom', 'interior'], bedroom: ['bedroom', 'night'], living_room: ['livingroom', 'interior'], livingroom: ['livingroom', 'interior'], kitchen: ['kitchen', 'interior'],
+  classroom: ['livingroom', 'interior'], clinic: ['clinic', 'interior'], tech_hall: ['clinic', 'interior'],
+  desert: ['desert', 'day'], desert_dusk: ['desert', 'dusk'], ruins: ['ruins', 'golden'], ocean: ['ocean', 'day'], space: ['mountain', 'night'], waterfall: ['river', 'day'],
+  snow: ['snow', 'day'], snow_field: ['snow', 'night'], porch_night: ['cabin', 'interior'], body_tunnel: ['cabin', 'organ'], organ_cave: ['cabin', 'organ'],
   // Native Cinema locations; legacy field/room names now resolve to actual sets instead of the city fallback.
   field: ['forest', 'day'], yard: ['mountain', 'day'],
 }, LOCAL.kits || {});

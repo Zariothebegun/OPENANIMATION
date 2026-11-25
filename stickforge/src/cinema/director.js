@@ -10,7 +10,12 @@ export function sceneLook(scene) {
   const mapped = KIT_MAP[bg.kit || 'street'];
   if (!mapped) throw new Error(`Cinema kit "${bg.kit}" não registado. Kits disponíveis: ${Object.keys(KIT_MAP).join(', ')}`);
   const [kit, light] = mapped;
-  return { kit, light: bg.light || light, kitOpts: bg.opts || {}, sunAz: bg.sunAz, sunEl: bg.sunEl };
+  const kitOpts = { ...(bg.opts || {}) };
+  if (bg.kit === 'alley_night' && kitOpts.width === undefined) kitOpts.width = 2.5;
+  // Procedural environments use a stable scene-specific seed by default. Reusing
+  // the same kit in another scene now varies its dressing without losing repeatability.
+  if (kitOpts.seed === undefined) kitOpts.seed = hashStr(`${scene.id || 'scene'}:${kit}`);
+  return { kit, light: bg.light || light, kitOpts, sunAz: bg.sunAz, sunEl: bg.sunEl };
 }
 
 /** per-actor motion table at 48 Hz: position, speed, heading, walk phase (deterministic, cumulative) */
@@ -45,6 +50,7 @@ export function buildScene(plan, { fps = 24 } = {}) {
     const chars = plan.actors.map((a, j) => {
       if (t < a.at || t >= a.until) return null;
       const m = mo[j], k = Math.min(m.n - 1, k0), speed = m.V[k], moving = speed > 0.25; const [x, z] = pos[j];
+      const y = track(a.y0 ?? 0, a.ys, t);
       let hx = m.HX[k], hz = m.HZ[k];
       if (!moving) { // face the partner, else the camera
         const tgt = a.toward ? plan.actors.findIndex((q) => q.id === a.toward) : -1;
@@ -56,7 +62,7 @@ export function buildScene(plan, { fps = 24 } = {}) {
       const talk = speaking(a, t); const flap = talk && Math.floor((t * 7 + (hashStr(a.id) % 5)) ) % 2 === 0;
       const expr = flap ? (OPEN_MOUTH[base] || 'smile') : base;
       const seed = (hashStr(a.id) % 7) + 1;
-      return { id: a.id, outfit: outfits[j], seed, x, z, hx, hz, walk: moving ? speed : 0, phase: m.PH[k], expr, look: 0, lid: 0, gest: moving ? 'idle' : name, gt: t - act.t0, scale: a.scale ?? 1, _swaps: swaps[j] };
+      return { id: a.id, outfit: outfits[j], seed, x, y, z, hx, hz, walk: moving ? speed : 0, phase: m.PH[k], expr, look: 0, lid: 0, gest: moving ? 'idle' : name, gt: t - act.t0, scale: a.scale ?? 1, _swaps: swaps[j] };
     }).filter(Boolean);
     // depth of field: shallow on close shots, none on wides (reference: ~1/3 of screen time)
     const fd = Math.hypot(c.look[0] - c.pos[0], c.look[1] - c.pos[1], c.look[2] - c.pos[2]);

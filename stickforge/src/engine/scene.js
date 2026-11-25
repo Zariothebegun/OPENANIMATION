@@ -68,7 +68,7 @@ const SHOTS = {
 };
 function withBounds(sc, c) { if (c) c.bounds = (sc.cam3 && sc.cam3.bounds) || KIT_BOUNDS[sc.bg.kit] || null; return c; }
 export const SHOT_NAMES = Object.keys(SHOTS);
-function defaultCam(sc, dur) {
+function defaultCam(sc, dur, lines = [], beats = []) {
   const names = SHOT_NAMES, nm = sc.shot && SHOTS[sc.shot] ? sc.shot : names[hashStr(String(sc.id || '')) % names.length];
   const shot = structuredClone(SHOTS[nm]), actors = sc.actors || [];
   // The old fixed 3–6 m orbit presets clipped two-person dialogue in portrait output.
@@ -78,7 +78,45 @@ function defaultCam(sc, dur) {
     const farthest = Math.max(...shot.orbit.r), desired = Math.max(9.5, spread * 2.5 + 7.5), delta = Math.max(0, desired - farthest);
     shot.orbit.r = shot.orbit.r.map((r) => r + delta);
   }
-  return { focus: sc.focus ?? '*', ...shot, ease: 'smooth', shake: sc.shake ?? 0.4 };
+  const base = shot.orbit;
+  if (sc.autoCoverage === false || dur < 3.4 || !actors.length) return { focus: sc.focus ?? '*', ...shot, ease: 'smooth', shake: sc.shake ?? 0.4 };
+
+  // Automatic coverage gives every generated scene a small edit: establish the space,
+  // cut to the active speaker/action, then add a reaction/alternate angle. It only
+  // changes the camera; the same frames, geometry and renderer are reused.
+  const shotCount = Math.min(4, Math.max(2, Math.ceil(dur / 3.7)));
+  const minGap = Math.max(1.25, dur * 0.13);
+  const events = [];
+  for (const l of lines) if (l.who && actors.some((a) => a.id === l.who) && l.t0 > 0.8 && l.t0 < dur - 0.75)
+    events.push({ t: l.t0, actor: l.who, kind: 'speaker', priority: 2 });
+  for (const b of beats) if (b.actor && actors.some((a) => a.id === b.actor) && (b.act || b.face || b.to !== undefined) && b._t > 0.8 && b._t < dur - 0.75)
+    events.push({ t: b._t, actor: b.actor, kind: 'action', priority: 3 });
+  for (let i = 1; i < shotCount; i++) events.push({ t: (dur * i) / shotCount, actor: null, kind: 'alternate', priority: 1 });
+  events.sort((a, b) => b.priority - a.priority || a.t - b.t);
+  const chosen = [{ t: 0, actor: null, kind: 'wide' }];
+  for (const e of events) {
+    if (chosen.length >= shotCount) break;
+    if (chosen.every((q) => Math.abs(q.t - e.t) >= minGap)) chosen.push(e);
+  }
+  chosen.sort((a, b) => a.t - b.t);
+  const keys = [];
+  for (let i = 0; i < chosen.length; i++) {
+    const e = chosen[i], next = chosen[i + 1], actorIndex = e.actor ? actors.findIndex((a) => a.id === e.actor) : -1;
+    const close = e.kind === 'action' || e.kind === 'speaker' || (e.kind === 'alternate' && i % 2 === 1);
+    const focus = close && actorIndex >= 0 ? e.actor : (sc.focus ?? '*');
+    const azBase = Array.isArray(base.az) ? base.az[0] : base.az;
+    const az = close ? (actorIndex === 1 ? -28 : 28) : azBase + (i % 2 ? -8 : 8);
+    const r0 = close ? (Number(actors[actorIndex]?.scale) > 1.2 ? 5.4 : 4.4) : Math.max(9.2, Array.isArray(base.r) ? base.r[0] : base.r);
+    const el0 = close ? 5 : (Array.isArray(base.el) ? base.el[0] : base.el);
+    const h0 = close ? 1.55 : (Array.isArray(base.h) ? base.h[0] : base.h);
+    const fov0 = close ? 40 : (Array.isArray(base.fov) ? base.fov[0] : base.fov);
+    const orbit = { focus, r: r0, az, el: el0, h: h0, fov: fov0 };
+    keys.push({ t: e.t, orbit, ease: 'smooth', cut: i > 0 });
+    // A restrained push within each shot keeps the camera alive without adding renders.
+    if (next && next.t - e.t > 1.6) keys.push({ t: Math.min(e.t + 0.85, next.t - 0.28), orbit: { ...orbit, r: r0 * 0.94, az: az + (close ? 3 : -3) }, ease: 'smooth' });
+  }
+  keys.sort((a, b) => a.t - b.t);
+  return { keys, shake: sc.shake ?? 0.22 };
 }
 export function compileScene(scene, meta = {}, timing = {}) {
   const sc = scene;
@@ -176,6 +214,8 @@ export function compileScene(scene, meta = {}, timing = {}) {
   if (STAGE) for (const a of actors) if (a.from) {
     const en = a.enter ?? 1.1, tx = a.x0, tz = a.z0, fx0 = a.from.x ?? tx, fz0 = a.from.z ?? tz;
     a.xs.unshift({ t0: 0, t1: en, from: fx0, to: tx, ease: 'out' }); a.zs.unshift({ t0: 0, t1: en, from: fz0, to: tz, ease: 'out' });
+    const fy0 = a.from.y ?? (a.y0 ?? 0), ty = a.y0 ?? 0;
+    if (Math.abs(fy0 - ty) > 1e-4) a.ys.unshift({ t0: 0, t1: en, from: fy0, to: ty, ease: 'out' });
     a.flip0 = tx < fx0; a.acts[0] = { t0: 0, name: 'walk', p: {}, move: { from: fx0, to: tx, dur: en, m: true, dist: Math.hypot(tx - fx0, tz - fz0) } }; a.acts.splice(1, 0, { t0: en, name: 'idle', p: {} });
   }
   // fala: segmentos idle -> talk (auto-direcção, sem o realizador ter de pedir)
@@ -208,7 +248,7 @@ export function compileScene(scene, meta = {}, timing = {}) {
   for (const a of actors) { a.flips.sort((x, y) => x.t - y.t); a.faces.sort((x, y) => x.t - y.t); }
 
   return {
-    id: sc.id, scene: sc, meta, dur, lines, words, chunks, actors, props, cam, fxs, stage: STAGE, cam3: STAGE ? withBounds(sc, normalizeCam3(typeof sc.cam3 === 'string' ? { focus: sc.focus ?? '*', ...(SHOTS[sc.cam3] || SHOTS.orbit_l), ease: 'smooth', shake: 0.4 } : sc.cam3 ?? defaultCam(sc, dur), dur)) : null,
+    id: sc.id, scene: sc, meta, dur, lines, words, chunks, actors, props, cam, fxs, stage: STAGE, cam3: STAGE ? withBounds(sc, normalizeCam3(typeof sc.cam3 === 'string' ? { focus: sc.focus ?? '*', ...(SHOTS[sc.cam3] || SHOTS.orbit_l), ease: 'smooth', shake: 0.4 } : sc.cam3 ?? defaultCam(sc, dur, lines, beats), dur)) : null,
     title: sc.title ? { ...sc.title, at: tspec(sc.title.at, 0.1), dur: sc.title.dur ?? 2 } : null,
     captions: capCfg,
     trans: { kind: sc.transition || meta.transition || 'cut', dur: sc.transitionDur ?? 0.45, color: sc.transitionColor || meta.transitionColor || '#14141c' },

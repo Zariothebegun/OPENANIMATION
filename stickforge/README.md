@@ -30,6 +30,8 @@ O Viently é Expo/React Native. A via mais rápida e segura: correr StickForge c
 ## Cenários 3D e direcção de câmara
 `bg:{kind:"set3d", kit:"..."}` renderiza cada frame numa cena three.js: personagens-cartão 2D recebem luz e sombra dentro de cenários 3D pintados. `shot` escolhe um movimento de câmara predefinido; `cam3` permite keyframes. A câmara fica parada se a configuração pedir um plano fixo. Ver `docs/AGENT_GUIDE.md` e `docs/CATALOG.md`. Dependências extra: `three`, `playwright` (Chromium).
 
+No Cinema, cenas sem `cam3` recebem cobertura automática (contexto, fala/acção e reacção), sem acrescentar frames. `autoCoverage:false` conserva um plano único. Os ambientes procedurais incluem quartos, cozinha, consultório, sala, praça, deserto, neve, costa e ruínas; cada cena recebe decoração determinística própria e aceita `bg.opts.seed` explícita. Personagens de palco também podem entrar ou mudar de altura com `actor.from.y` e `actor.y`.
+
 ## Correr como app independente
 - Local: `bash scripts/setup.sh && npm start` → editor + API em http://localhost:4173
 - Docker: `docker build -t stickforge . && docker run -p 4173:4173 -v sf_cache:/app/cache -v $PWD/out:/app/out stickforge`

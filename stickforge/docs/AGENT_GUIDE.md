@@ -117,7 +117,11 @@ Exemplos:
 
 ## Cenários 3D com câmara de realizador (`bg.kind = "set3d"`) — PREFERIR para vídeos de qualidade
 
-Os cenários são **mundos 3D reais** (three.js, pintados com tinta/sombras/névoa) e as personagens 2D andam **dentro** deles, com sombra projectada. Escolhe `shot` ou `cam3` para orientar o movimento da câmara; uma câmara com keyframes fixos pode ficar parada.
+Os cenários são **mundos 3D reais** (three.js, pintados com tinta/sombras/névoa) e as personagens 2D andam **dentro** deles, com sombra projectada. Escolhe `shot` ou `cam3` para orientar o movimento da câmara.
+
+**Direcção automática no Cinema:** sem `cam3`, o motor monta cobertura com 2–4 planos por cena, guiados pela duração, falas e acções. Cada plano mantém o cenário e corta para o personagem relevante; pequenos avanços de câmara reutilizam os mesmos frames. Define `"autoCoverage": false` numa cena para manter um único enquadramento. Podes ajustar a altura em metros com `actor.y`; `actor.from.y` anima a entrada nessa altura.
+
+Os kits semânticos agora incluem interiores próprios (`bedroom`, `kitchen`, `clinic`, `living_room`) e exteriores próprios (`plaza`, `desert`, `snow`, `ocean`, `ruins`), além de `street`, `forest`, `mountain`, `cabin` e `river`. O motor escolhe uma variação procedural estável por cena; define `bg.opts.seed` para repetir exactamente uma composição.
 
 ```jsonc
 { "id": "cells", "transition": "whip",
