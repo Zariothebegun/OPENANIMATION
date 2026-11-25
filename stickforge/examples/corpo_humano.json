@@ -1,0 +1,592 @@
+{
+ "meta": {
+  "format": "9:16",
+  "lang": "pt-br",
+  "voice": "pf_dora",
+  "quality": "standard",
+  "style": "painted",
+  "transition": "cut"
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "bg": {
+    "kind": "set3d",
+    "kit": "clinic"
+   },
+   "shot": "orbit_l",
+   "transition": "cut",
+   "actors": [
+    {
+     "id": "a",
+     "char": "ana",
+     "x": -0.9,
+     "z": 0,
+     "toward": "b",
+     "from": {
+      "x": -3,
+      "z": 2
+     }
+    },
+    {
+     "id": "b",
+     "char": "rui",
+     "x": 1,
+     "z": -0.6,
+     "toward": "a"
+    }
+   ],
+   "lines": [
+    {
+     "who": "a",
+     "text": "Vamos entrar no corpo humano e ver o que se passa lá dentro?"
+    },
+    {
+     "who": "b",
+     "text": "Já! Mas eu caibo lá?"
+    }
+   ],
+   "title": {
+    "text": "O CORPO HUMANO\nPOR DENTRO",
+    "at": 0.1,
+    "dur": 3.2
+   }
+  },
+  {
+   "id": "cells",
+   "bg": {
+    "kind": "set3d",
+    "kit": "body_tunnel"
+   },
+   "shot": "dolly_in",
+   "transition": "whip",
+   "actors": [
+    {
+     "id": "a",
+     "char": "ana",
+     "x": 1.3,
+     "z": 0.8,
+     "toward": "b",
+     "from": {
+      "x": 4,
+      "z": -2
+     }
+    },
+    {
+     "id": "b",
+     "char": "rui",
+     "x": -0.8,
+     "z": -1.2,
+     "toward": "a"
+    }
+   ],
+   "lines": [
+    {
+     "who": "a",
+     "text": "Tudo começa nas células: um adulto tem cerca de trinta biliões, segundo as estimativas."
+    }
+   ],
+   "props": [
+    {
+     "id": "s",
+     "kind": "stat",
+     "x": 0.4,
+     "y": 0.3,
+     "size": 0.4,
+     "at": "@trinta",
+     "fx": "none",
+     "p": {
+      "value": "~30 biliões",
+      "label": "de células (estimativa)",
+      "color": "#ffd23f"
+     }
+    }
+   ]
+  },
+  {
+   "id": "bones",
+   "bg": {
+    "kind": "set3d",
+    "kit": "clinic"
+   },
+   "shot": "orbit_r",
+   "transition": "flash",
+   "actors": [
+    {
+     "id": "a",
+     "char": "ana",
+     "x": -1.2,
+     "z": -0.4,
+     "toward": "b"
+    },
+    {
+     "id": "b",
+     "char": "rui",
+     "x": 0.9,
+     "z": 0.8,
+     "toward": "a",
+     "from": {
+      "x": 3,
+      "z": 3
+     }
+    }
+   ],
+   "lines": [
+    {
+     "who": "a",
+     "text": "O esqueleto de um adulto tem cerca de duzentos e seis ossos."
+    },
+    {
+     "who": "b",
+     "text": "E os bebés?"
+    },
+    {
+     "who": "a",
+     "text": "Um recém-nascido tem uns duzentos e setenta, que se vão fundindo."
+    }
+   ],
+   "props": [
+    {
+     "id": "c",
+     "kind": "callout",
+     "x": 0.5,
+     "y": 0.12,
+     "size": 0.75,
+     "at": "@duzentos",
+     "fx": "pop",
+     "p": {
+      "text": "Adulto: ~206 · Bebé: ~270",
+      "dir": "down",
+      "color": "#7ae8ff"
+     }
+    }
+   ]
+  },
+  {
+   "id": "heart",
+   "bg": {
+    "kind": "set3d",
+    "kit": "body_tunnel"
+   },
+   "shot": "crane",
+   "transition": "whip",
+   "actors": [
+    {
+     "id": "a",
+     "char": "ana",
+     "x": 0.9,
+     "z": 0.5,
+     "toward": "b",
+     "from": {
+      "x": -3,
+      "z": -2
+     }
+    },
+    {
+     "id": "b",
+     "char": "rui",
+     "x": -1.2,
+     "z": -0.8,
+     "toward": "a"
+    }
+   ],
+   "lines": [
+    {
+     "who": "a",
+     "text": "O coração tem quatro câmaras e bate cerca de setenta e duas vezes por minuto em repouso, bombeando mais de cinco litros de sangue por minuto."
+    }
+   ],
+   "props": [
+    {
+     "id": "s",
+     "kind": "stat",
+     "x": 0.4,
+     "y": 0.12,
+     "size": 0.28,
+     "at": "@setenta",
+     "fx": "none",
+     "p": {
+      "value": "72 / min",
+      "label": "em repouso",
+      "color": "#ffffff"
+     }
+    },
+    {
+     "id": "c",
+     "kind": "callout",
+     "x": 0.5,
+     "y": 0.72,
+     "size": 0.8,
+     "at": "@litros",
+     "fx": "pop",
+     "p": {
+      "text": "~5 litros por minuto",
+      "dir": "up",
+      "color": "#ffb0b8"
+     }
+    }
+   ]
+  },
+  {
+   "id": "blood",
+   "bg": {
+    "kind": "set3d",
+    "kit": "body_tunnel"
+   },
+   "shot": "orbit_l",
+   "transition": "flash",
+   "actors": [
+    {
+     "id": "a",
+     "char": "ana",
+     "x": -1,
+     "z": 0.2,
+     "toward": "b"
+    },
+    {
+     "id": "b",
+     "char": "rui",
+     "x": 1.1,
+     "z": -0.6,
+     "toward": "a",
+     "from": {
+      "x": 4,
+      "z": 1
+     }
+    }
+   ],
+   "lines": [
+    {
+     "who": "a",
+     "text": "Esse sangue corre pelos vasos e leva oxigénio a todas as células."
+    }
+   ]
+  },
+  {
+   "id": "lungs",
+   "bg": {
+    "kind": "set3d",
+    "kit": "organ_cave"
+   },
+   "shot": "dolly_out",
+   "transition": "whip",
+   "actors": [
+    {
+     "id": "a",
+     "char": "ana",
+     "x": 1,
+     "z": 0.3,
+     "toward": "b",
+     "from": {
+      "x": 3,
+      "z": 2
+     }
+    },
+    {
+     "id": "b",
+     "char": "rui",
+     "x": -1,
+     "z": -1,
+     "toward": "a"
+    }
+   ],
+   "lines": [
+    {
+     "who": "a",
+     "text": "Os pulmões respiram doze a quinze vezes por minuto e passam o oxigénio do ar para o sangue."
+    }
+   ],
+   "props": [
+    {
+     "id": "c",
+     "kind": "callout",
+     "x": 0.5,
+     "y": 0.75,
+     "size": 0.8,
+     "at": "@doze",
+     "fx": "pop",
+     "p": {
+      "text": "12–15 respirações por minuto",
+      "dir": "up",
+      "color": "#fff3f6"
+     }
+    }
+   ]
+  },
+  {
+   "id": "brain",
+   "bg": {
+    "kind": "set3d",
+    "kit": "organ_cave"
+   },
+   "shot": "orbit_r",
+   "transition": "flash",
+   "actors": [
+    {
+     "id": "a",
+     "char": "ana",
+     "x": -1.1,
+     "z": 0,
+     "toward": "b",
+     "from": {
+      "x": -4,
+      "z": 0
+     }
+    },
+    {
+     "id": "b",
+     "char": "rui",
+     "x": 0.9,
+     "z": -0.9,
+     "toward": "a"
+    }
+   ],
+   "lines": [
+    {
+     "who": "a",
+     "text": "O cérebro tem cerca de oitenta e seis mil milhões de neurónios."
+    },
+    {
+     "who": "b",
+     "text": "Isso é muito!"
+    },
+    {
+     "who": "a",
+     "text": "Pesa só dois por cento do corpo, mas usa até vinte por cento da energia."
+    }
+   ],
+   "props": [
+    {
+     "id": "s",
+     "kind": "stat",
+     "x": 0.4,
+     "y": 0.14,
+     "size": 0.28,
+     "at": "@oitenta",
+     "fx": "none",
+     "p": {
+      "value": "86 mil milhões",
+      "label": "de neurónios",
+      "color": "#8aeaff"
+     }
+    },
+    {
+     "id": "c",
+     "kind": "callout",
+     "x": 0.5,
+     "y": 0.7,
+     "size": 0.8,
+     "at": "@vinte",
+     "fx": "pop",
+     "p": {
+      "text": "2% do corpo · até 20% da energia",
+      "dir": "up",
+      "color": "#c8b8ff"
+     }
+    }
+   ]
+  },
+  {
+   "id": "gut",
+   "bg": {
+    "kind": "set3d",
+    "kit": "organ_cave"
+   },
+   "shot": "low",
+   "transition": "whip",
+   "actors": [
+    {
+     "id": "a",
+     "char": "ana",
+     "x": 0.8,
+     "z": 0.9,
+     "toward": "b",
+     "from": {
+      "x": 2,
+      "z": 3
+     }
+    },
+    {
+     "id": "b",
+     "char": "rui",
+     "x": -1,
+     "z": -0.5,
+     "toward": "a"
+    }
+   ],
+   "lines": [
+    {
+     "who": "a",
+     "text": "No intestino delgado, com três a cinco metros, absorve-se a maior parte dos nutrientes."
+    }
+   ],
+   "props": [
+    {
+     "id": "c",
+     "kind": "callout",
+     "x": 0.5,
+     "y": 0.12,
+     "size": 0.8,
+     "at": "@metros",
+     "fx": "pop",
+     "p": {
+      "text": "Intestino delgado: 3–5 m",
+      "dir": "down",
+      "color": "#ffe0b0"
+     }
+    }
+   ]
+  },
+  {
+   "id": "kidney",
+   "bg": {
+    "kind": "set3d",
+    "kit": "body_tunnel"
+   },
+   "shot": "dolly_in",
+   "transition": "flash",
+   "actors": [
+    {
+     "id": "a",
+     "char": "ana",
+     "x": -0.8,
+     "z": 0.6,
+     "toward": "b"
+    },
+    {
+     "id": "b",
+     "char": "rui",
+     "x": 1.2,
+     "z": -0.4,
+     "toward": "a",
+     "from": {
+      "x": 4,
+      "z": -1
+     }
+    }
+   ],
+   "lines": [
+    {
+     "who": "a",
+     "text": "Os rins filtram cerca de cento e oitenta litros de líquido por dia, mas quase tudo é reabsorvido: saem só entre oito décimos de litro e dois litros de urina."
+    }
+   ],
+   "props": [
+    {
+     "id": "s",
+     "kind": "stat",
+     "x": 0.4,
+     "y": 0.13,
+     "size": 0.28,
+     "at": "@cento",
+     "fx": "none",
+     "p": {
+      "value": "~180 L",
+      "label": "filtrados por dia",
+      "color": "#ffd23f"
+     }
+    },
+    {
+     "id": "c",
+     "kind": "callout",
+     "x": 0.5,
+     "y": 0.72,
+     "size": 0.85,
+     "at": "@urina",
+     "fx": "pop",
+     "p": {
+      "text": "Urina: 0,8 a 2 litros",
+      "dir": "up",
+      "color": "#ffe28a"
+     }
+    }
+   ]
+  },
+  {
+   "id": "recap",
+   "bg": {
+    "kind": "set3d",
+    "kit": "clinic"
+   },
+   "shot": "orbit_l",
+   "transition": "whip",
+   "actors": [
+    {
+     "id": "a",
+     "char": "ana",
+     "x": 1.2,
+     "z": -0.3,
+     "toward": "b",
+     "from": {
+      "x": 3,
+      "z": -2
+     }
+    },
+    {
+     "id": "b",
+     "char": "rui",
+     "x": -0.7,
+     "z": 0.9,
+     "toward": "a"
+    }
+   ],
+   "lines": [
+    {
+     "who": "a",
+     "text": "Tudo isto funciona ao mesmo tempo, coordenado pelo cérebro e alimentado pelo sangue."
+    }
+   ],
+   "props": [
+    {
+     "id": "c",
+     "kind": "callout",
+     "x": 0.5,
+     "y": 0.12,
+     "size": 0.8,
+     "at": "@cérebro",
+     "fx": "pop",
+     "p": {
+      "text": "Tudo ao mesmo tempo",
+      "dir": "down",
+      "color": "#ffd23f"
+     }
+    }
+   ]
+  },
+  {
+   "id": "end",
+   "bg": {
+    "kind": "set3d",
+    "kit": "clinic"
+   },
+   "shot": "crane",
+   "transition": "flash",
+   "actors": [
+    {
+     "id": "a",
+     "char": "ana",
+     "x": -0.9,
+     "z": 0.4,
+     "toward": "b"
+    },
+    {
+     "id": "b",
+     "char": "rui",
+     "x": 0.9,
+     "z": -0.5,
+     "toward": "a"
+    }
+   ],
+   "lines": [
+    {
+     "who": "a",
+     "text": "Trinta biliões de células a trabalhar em equipa."
+    },
+    {
+     "who": "b",
+     "text": "Isso é o corpo humano."
+    }
+   ]
+  }
+ ]
+}

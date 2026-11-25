@@ -1,0 +1,462 @@
+{
+  "worker_startup_ms": 1136,
+  "A_cold_content_std_1080p": {
+    "wall_ms": 50956,
+    "video_s": 69.1,
+    "res": "1080x1920",
+    "phases_ms": {
+      "warm": 0,
+      "voice+render (pipelined)": 48527,
+      "audio": 2285,
+      "concat+mux": 143,
+      "total": 50955
+    },
+    "file": "h264 1080x1920 30/1 69.1s | aac  69.1s",
+    "scenes": [
+      {
+        "id": "hook",
+        "cached": false,
+        "dur": 5,
+        "voiceMs": 3266,
+        "renderMs": 3627,
+        "drawMs": 3062,
+        "writeMs": 425,
+        "frames": 75
+      },
+      {
+        "id": "what",
+        "cached": false,
+        "dur": 7,
+        "voiceMs": 8483,
+        "renderMs": 4394,
+        "drawMs": 3658,
+        "writeMs": 644,
+        "frames": 105
+      },
+      {
+        "id": "desk",
+        "cached": false,
+        "dur": 7.13,
+        "voiceMs": 12817,
+        "renderMs": 6832,
+        "drawMs": 5656,
+        "writeMs": 1036,
+        "frames": 107
+      },
+      {
+        "id": "storage",
+        "cached": false,
+        "dur": 7.73,
+        "voiceMs": 13865,
+        "renderMs": 7355,
+        "drawMs": 6151,
+        "writeMs": 1104,
+        "frames": 116
+      },
+      {
+        "id": "speed",
+        "cached": false,
+        "dur": 5.53,
+        "voiceMs": 22123,
+        "renderMs": 3846,
+        "drawMs": 3239,
+        "writeMs": 539,
+        "frames": 83
+      },
+      {
+        "id": "full",
+        "cached": false,
+        "dur": 6.87,
+        "voiceMs": 26239,
+        "renderMs": 4195,
+        "drawMs": 3590,
+        "writeMs": 557,
+        "frames": 103
+      },
+      {
+        "id": "tips",
+        "cached": false,
+        "dur": 7.87,
+        "voiceMs": 30469,
+        "renderMs": 4537,
+        "drawMs": 3814,
+        "writeMs": 650,
+        "frames": 118
+      },
+      {
+        "id": "myth",
+        "cached": false,
+        "dur": 7.93,
+        "voiceMs": 36230,
+        "renderMs": 5475,
+        "drawMs": 4710,
+        "writeMs": 689,
+        "frames": 119
+      },
+      {
+        "id": "recap",
+        "cached": false,
+        "dur": 9.8,
+        "voiceMs": 42955,
+        "renderMs": 5570,
+        "drawMs": 4866,
+        "writeMs": 651,
+        "frames": 147
+      },
+      {
+        "id": "outro",
+        "cached": false,
+        "dur": 4.2,
+        "voiceMs": 44505,
+        "renderMs": 3172,
+        "drawMs": 2687,
+        "writeMs": 398,
+        "frames": 63
+      }
+    ]
+  },
+  "B_voice_cached_std_1080p": {
+    "wall_ms": 27244,
+    "video_s": 69.1,
+    "res": "1080x1920",
+    "phases_ms": {
+      "warm": 0,
+      "voice+render (pipelined)": 24502,
+      "audio": 2589,
+      "concat+mux": 151,
+      "total": 27243
+    },
+    "file": "h264 1080x1920 30/1 69.1s | aac  69.1s",
+    "scenes": [
+      {
+        "id": "hook",
+        "cached": false,
+        "dur": 5,
+        "voiceMs": 1,
+        "renderMs": 3530,
+        "drawMs": 2951,
+        "writeMs": 492,
+        "frames": 75
+      },
+      {
+        "id": "what",
+        "cached": false,
+        "dur": 7,
+        "voiceMs": 1,
+        "renderMs": 5468,
+        "drawMs": 4775,
+        "writeMs": 634,
+        "frames": 105
+      },
+      {
+        "id": "desk",
+        "cached": false,
+        "dur": 7.13,
+        "voiceMs": 1,
+        "renderMs": 9487,
+        "drawMs": 4959,
+        "writeMs": 916,
+        "frames": 107
+      },
+      {
+        "id": "storage",
+        "cached": false,
+        "dur": 7.73,
+        "voiceMs": 1,
+        "renderMs": 10918,
+        "drawMs": 4584,
+        "writeMs": 799,
+        "frames": 116
+      },
+      {
+        "id": "speed",
+        "cached": false,
+        "dur": 5.53,
+        "voiceMs": 1,
+        "renderMs": 12819,
+        "drawMs": 2775,
+        "writeMs": 500,
+        "frames": 83
+      },
+      {
+        "id": "full",
+        "cached": false,
+        "dur": 6.87,
+        "voiceMs": 1,
+        "renderMs": 15396,
+        "drawMs": 3804,
+        "writeMs": 602,
+        "frames": 103
+      },
+      {
+        "id": "tips",
+        "cached": false,
+        "dur": 7.87,
+        "voiceMs": 1,
+        "renderMs": 18046,
+        "drawMs": 4511,
+        "writeMs": 664,
+        "frames": 118
+      },
+      {
+        "id": "myth",
+        "cached": false,
+        "dur": 7.93,
+        "voiceMs": 1,
+        "renderMs": 20470,
+        "drawMs": 4346,
+        "writeMs": 670,
+        "frames": 119
+      },
+      {
+        "id": "recap",
+        "cached": false,
+        "dur": 9.8,
+        "voiceMs": 1,
+        "renderMs": 24501,
+        "drawMs": 5677,
+        "writeMs": 724,
+        "frames": 147
+      },
+      {
+        "id": "outro",
+        "cached": false,
+        "dur": 4.2,
+        "voiceMs": 1,
+        "renderMs": 23493,
+        "drawMs": 2574,
+        "writeMs": 353,
+        "frames": 63
+      }
+    ]
+  },
+  "C_edit_one_scene": {
+    "wall_ms": 5570,
+    "video_s": 69.1,
+    "res": "1080x1920",
+    "phases_ms": {
+      "warm": 0,
+      "voice+render (pipelined)": 2832,
+      "audio": 2594,
+      "concat+mux": 144,
+      "total": 5570
+    },
+    "file": "h264 1080x1920 30/1 69.1s | aac  69.1s",
+    "scenes": [
+      {
+        "id": "hook",
+        "cached": true,
+        "dur": 5,
+        "voiceMs": 1,
+        "renderMs": 0,
+        "drawMs": 0,
+        "writeMs": 0
+      },
+      {
+        "id": "what",
+        "cached": true,
+        "dur": 7,
+        "voiceMs": 1,
+        "renderMs": 0,
+        "drawMs": 0,
+        "writeMs": 0
+      },
+      {
+        "id": "desk",
+        "cached": false,
+        "dur": 7.13,
+        "voiceMs": 1,
+        "renderMs": 2830,
+        "drawMs": 2419,
+        "writeMs": 361,
+        "frames": 107
+      },
+      {
+        "id": "storage",
+        "cached": true,
+        "dur": 7.73,
+        "voiceMs": 1,
+        "renderMs": 0,
+        "drawMs": 0,
+        "writeMs": 0
+      },
+      {
+        "id": "speed",
+        "cached": true,
+        "dur": 5.53,
+        "voiceMs": 1,
+        "renderMs": 0,
+        "drawMs": 0,
+        "writeMs": 0
+      },
+      {
+        "id": "full",
+        "cached": true,
+        "dur": 6.87,
+        "voiceMs": 1,
+        "renderMs": 0,
+        "drawMs": 0,
+        "writeMs": 0
+      },
+      {
+        "id": "tips",
+        "cached": true,
+        "dur": 7.87,
+        "voiceMs": 1,
+        "renderMs": 0,
+        "drawMs": 0,
+        "writeMs": 0
+      },
+      {
+        "id": "myth",
+        "cached": true,
+        "dur": 7.93,
+        "voiceMs": 1,
+        "renderMs": 0,
+        "drawMs": 0,
+        "writeMs": 0
+      },
+      {
+        "id": "recap",
+        "cached": true,
+        "dur": 9.8,
+        "voiceMs": 1,
+        "renderMs": 0,
+        "drawMs": 0,
+        "writeMs": 0
+      },
+      {
+        "id": "outro",
+        "cached": true,
+        "dur": 4.2,
+        "voiceMs": 1,
+        "renderMs": 0,
+        "drawMs": 0,
+        "writeMs": 0
+      }
+    ]
+  },
+  "D_draft_540x960_voice_cached": {
+    "wall_ms": 8794,
+    "video_s": 69.1,
+    "res": "540x960",
+    "phases_ms": {
+      "warm": 0,
+      "voice+render (pipelined)": 6239,
+      "audio": 2415,
+      "concat+mux": 139,
+      "total": 8794
+    },
+    "file": "h264 540x960 30/1 69.1s | aac  69.1s",
+    "scenes": [
+      {
+        "id": "hook",
+        "cached": false,
+        "dur": 5,
+        "voiceMs": 1,
+        "renderMs": 977,
+        "drawMs": 741,
+        "writeMs": 203,
+        "frames": 75
+      },
+      {
+        "id": "what",
+        "cached": false,
+        "dur": 7,
+        "voiceMs": 1,
+        "renderMs": 1136,
+        "drawMs": 780,
+        "writeMs": 320,
+        "frames": 105
+      },
+      {
+        "id": "desk",
+        "cached": false,
+        "dur": 7.13,
+        "voiceMs": 1,
+        "renderMs": 2396,
+        "drawMs": 1092,
+        "writeMs": 302,
+        "frames": 107
+      },
+      {
+        "id": "storage",
+        "cached": false,
+        "dur": 7.73,
+        "voiceMs": 1,
+        "renderMs": 2393,
+        "drawMs": 1021,
+        "writeMs": 206,
+        "frames": 116
+      },
+      {
+        "id": "speed",
+        "cached": false,
+        "dur": 5.53,
+        "voiceMs": 1,
+        "renderMs": 3405,
+        "drawMs": 670,
+        "writeMs": 312,
+        "frames": 83
+      },
+      {
+        "id": "full",
+        "cached": false,
+        "dur": 6.87,
+        "voiceMs": 1,
+        "renderMs": 3604,
+        "drawMs": 910,
+        "writeMs": 269,
+        "frames": 103
+      },
+      {
+        "id": "tips",
+        "cached": false,
+        "dur": 7.87,
+        "voiceMs": 1,
+        "renderMs": 4716,
+        "drawMs": 1033,
+        "writeMs": 243,
+        "frames": 118
+      },
+      {
+        "id": "myth",
+        "cached": false,
+        "dur": 7.93,
+        "voiceMs": 1,
+        "renderMs": 5147,
+        "drawMs": 1149,
+        "writeMs": 345,
+        "frames": 119
+      },
+      {
+        "id": "recap",
+        "cached": false,
+        "dur": 9.8,
+        "voiceMs": 1,
+        "renderMs": 6237,
+        "drawMs": 1295,
+        "writeMs": 202,
+        "frames": 147
+      },
+      {
+        "id": "outro",
+        "cached": false,
+        "dur": 4.2,
+        "voiceMs": 1,
+        "renderMs": 6011,
+        "drawMs": 630,
+        "writeMs": 204,
+        "frames": 63
+      }
+    ]
+  },
+  "machine": {
+    "cores": 2,
+    "model": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+    "ram_gb": 7.8,
+    "tts_model": "kokoro fp32",
+    "tts_workers": 2,
+    "render_workers": 2
+  }
+}

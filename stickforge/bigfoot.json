@@ -1,0 +1,309 @@
+{
+  "meta": {
+    "engine": "cinema",
+    "style": "painted",
+    "format": "9:16",
+    "lang": "pt-br",
+    "voice": "pm_santa",
+    "quality": "high",
+    "fps": 24,
+    "captions": {
+      "enabled": true,
+      "y": 0.8
+    },
+    "transition": "fade"
+  },
+  "scenes": [
+    {
+      "id": "cold_open",
+      "bg": {
+        "kind": "set3d",
+        "kit": "forest_night",
+        "light": "night"
+      },
+      "shot": "dolly_in",
+      "transition": "flash",
+      "actors": [
+        {
+          "id": "host",
+          "char": "host",
+          "face": "scared",
+          "x": -0.5,
+          "z": 0,
+          "from": { "x": -2.2, "z": 2.2 }
+        }
+      ],
+      "lines": [
+        {
+          "who": "host",
+          "text": "Às duas da manhã, alguém bateu três vezes à porta da cabana."
+        }
+      ],
+      "beats": [
+        {
+          "t": "w0",
+          "actor": "host",
+          "act": "scared"
+        },
+        {
+          "t": "w9",
+          "camera": {
+            "zoom": 1.15,
+            "dur": 1.2
+          }
+        }
+      ]
+    },
+    {
+      "id": "tracks",
+      "bg": {
+        "kind": "set3d",
+        "kit": "mountain_pass",
+        "light": "day"
+      },
+      "shot": "orbit_r",
+      "transition": "whip",
+      "actors": [
+        {
+          "id": "host",
+          "char": "host",
+          "face": "thinking",
+          "x": -1,
+          "z": 1,
+          "from": { "x": -2.6, "z": 3 }
+        },
+        {
+          "id": "guide",
+          "char": "farmer",
+          "face": "worried",
+          "x": 1,
+          "z": 0,
+          "from": { "x": 3, "z": 2.5 }
+        }
+      ],
+      "lines": [
+        {
+          "who": "guide",
+          "text": "De manhã, encontrámos pegadas enormes junto à floresta."
+        },
+        {
+          "who": "host",
+          "text": "Eram grandes demais para um urso."
+        }
+      ],
+      "beats": [
+        {
+          "t": "w2",
+          "actor": "guide",
+          "act": "point"
+        },
+        {
+          "t": "w9",
+          "camera": {
+            "zoom": 1.1,
+            "dur": 1.5
+          }
+        },
+        {
+          "t": "w12",
+          "actor": "host",
+          "to": { "x": -1.8, "z": 0.3 },
+          "dur": 1.2
+        }
+      ]
+    },
+    {
+      "id": "forest",
+      "bg": {
+        "kind": "set3d",
+        "kit": "forest_clearing",
+        "light": "golden"
+      },
+      "shot": "orbit_l",
+      "transition": "fade",
+      "actors": [
+        {
+          "id": "host",
+          "char": "host",
+          "face": "scared",
+          "x": 0,
+          "z": 1,
+          "from": { "x": 1.8, "z": 3 }
+        }
+      ],
+      "lines": [
+        {
+          "who": "host",
+          "text": "Os ramos partiram-se. Entre as árvores, uma sombra gigantesca moveu-se."
+        }
+      ],
+      "beats": [
+        {
+          "t": "w0",
+          "camera": {
+            "zoom": 1.2,
+            "dur": 2
+          }
+        },
+        {
+          "t": "w8",
+          "fx": "shake",
+          "dur": 0.6
+        },
+        {
+          "t": "w10",
+          "actor": "host",
+          "to": { "x": -0.8, "z": 0 },
+          "dur": 0.7,
+          "act": "run"
+        }
+      ]
+    },
+    {
+      "id": "reveal",
+      "bg": {
+        "kind": "set3d",
+        "kit": "riverbank",
+        "light": "night"
+      },
+      "shot": "crane",
+      "transition": "flash",
+      "actors": [
+        {
+          "id": "host",
+          "char": "host",
+          "face": "shocked",
+          "x": -0.8,
+          "z": 1,
+          "from": { "x": -2.5, "z": 3 }
+        },
+        {
+          "id": "bigfoot",
+          "char": "hero",
+          "face": "confused",
+          "x": 0.8,
+          "z": 0,
+          "from": { "x": 3, "z": -2 },
+          "build": "large",
+          "scale": 1.35,
+          "hair": "long",
+          "hairColor": "#5b3928",
+          "outfit": "#5b3928"
+        }
+      ],
+      "lines": [
+        {
+          "who": "host",
+          "text": "Então apareceu ele: o Pé Grande. E parecia tão assustado como nós."
+        }
+      ],
+      "beats": [
+        {
+          "t": "w5",
+          "actor": "bigfoot",
+          "act": "shrug"
+        },
+        {
+          "t": "w8",
+          "actor": "host",
+          "face": "surprised"
+        }
+      ]
+    },
+    {
+      "id": "evidence",
+      "bg": {
+        "kind": "set3d",
+        "kit": "cabin_night",
+        "light": "interior"
+      },
+      "shot": "low",
+      "transition": "whip",
+      "actors": [
+        {
+          "id": "host",
+          "char": "host",
+          "face": "thinking",
+          "x": -0.6,
+          "z": 0,
+          "from": { "x": -2.6, "z": 2.5 }
+        }
+      ],
+      "lines": [
+        {
+          "who": "host",
+          "text": "Há relatos, fotografias e pegadas. Mas nenhuma prova foi confirmada."
+        }
+      ],
+      "beats": [
+        {
+          "t": "w4",
+          "camera": {
+            "zoom": 1.18,
+            "dur": 1.4
+          }
+        },
+        {
+          "t": "w8",
+          "actor": "host",
+          "to": { "x": 0.4, "z": -0.4 },
+          "dur": 1.4,
+          "act": "walk"
+        }
+      ]
+    },
+    {
+      "id": "ending",
+      "bg": {
+        "kind": "set3d",
+        "kit": "forest",
+        "light": "golden"
+      },
+      "shot": "dolly_out",
+      "transition": "fade",
+      "actors": [
+        {
+          "id": "host",
+          "char": "host",
+          "face": "smug",
+          "x": -0.4,
+          "z": 0,
+          "from": { "x": -2, "z": 2.5 }
+        },
+        {
+          "id": "bigfoot",
+          "char": "hero",
+          "face": "happy",
+          "x": 0.6,
+          "z": 0,
+          "from": { "x": 2.5, "z": 2.5 },
+          "build": "large",
+          "scale": 1.25,
+          "hair": "long",
+          "hairColor": "#5b3928",
+          "outfit": "#5b3928"
+        }
+      ],
+      "lines": [
+        {
+          "who": "host",
+          "text": "Lenda, engano ou criatura desconhecida? Tu decides. Olha bem para a floresta."
+        }
+      ],
+      "beats": [
+        {
+          "t": "w8",
+          "actor": "bigfoot",
+          "act": "wave"
+        },
+        {
+          "t": "end-1",
+          "camera": {
+            "zoom": 0.9,
+            "dur": 1
+          }
+        }
+      ]
+    }
+  ]
+}

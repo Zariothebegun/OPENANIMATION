@@ -6,13 +6,13 @@ App iOS para criar vídeos animados a partir de instruções. A IA escreve e rev
 ## Motor local
 - Código em `stickforge/`; pacote de distribuição `stickforge_completo.tar.gz`.
 - Caminhos 2D e Cinema 3D, editor web, API, DSL JSON, validação, cache por cena, voz e hooks de código por cena.
-- Cinema 3D mantém uma cena Three.js ao longo dos frames; cenários actuais: rua, floresta, montanha, cabana e rio. Personagens são cartões 2D dentro do cenário.
+- Cinema 3D mantém uma cena Three.js ao longo dos frames; cenários actuais: rua, floresta, montanha, cabana e rio com textura de água animada. Personagens são cartões 2D dentro do cenário; agora os portes `adult`, `stout`, `kid` e `large` são controláveis por `actor.build`.
 - Hooks: `hooks` (ficheiro) ou `hooksCode`; `build(api)` constrói objectos 3D uma vez, `update(obj,s,t,api)` anima-os e `state(s,t,api)` ajusta actor/câmara/luz por frame.
 - O render tenta aceleração gráfica e tem modo de compatibilidade (`SF_GPU=0`). O caminho de frames usa captura JPEG binária e buffers de composição reutilizados.
 - O projecto de demonstração `stickforge/bigfoot.json` tem seis cenas com cinco cenários-base, deslocações de personagens e planos de câmara variados; está configurado em `high`.
 
 ## Verificação feita nesta revisão
-- `node src/cinema/build.mjs`: bundle do Cinema compila.
+- `node src/cinema/build.mjs`: bundle do Cinema compila, incluindo a nova superfície de rio animada e o porte `large`.
 - `node src/cli.js validate bigfoot.json`: JSON válido, sem erros nem avisos.
 - Planos compilados: as seis cenas têm movimento de personagem e movimento de câmara.
 - Não foi gerado vídeo nesta revisão. A semelhança visual com a referência continua por confirmar; não declarar equivalência nem inventar tempo de render.

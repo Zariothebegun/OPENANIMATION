@@ -1,0 +1,312 @@
+# Catálogo (gerado automaticamente por `npm run catalog` — não editar à mão)
+
+## Personagens (actor.char)
+- `blue` — stickman azul padrão, t-shirt azul
+- `red` — stickman vermelho enérgico
+- `green` — stickman verde calmo
+- `nerd` — cientista/nerd de óculos e bata
+- `boss` — fato e gravata, ar sério
+- `girl` — rapariga de cabelo comprido, vestido
+- `student` — estudante com capuz amarelo e beanie
+- `chef` — chef com chapéu e avental
+- `hero` — super-herói com capa
+- `wizard` — mago com chapéu e barba
+- `cool` — tipo fixe de óculos escuros e boné
+- `king` — rei com coroa
+- `worker` — trabalhador com capacete
+- `grad` — licenciado com chapéu de graduação
+- `ana` — engenheira de coque e óculos, bata branca
+- `rui` — céptico de boné, bigode e camisola vermelha
+- `host` — apresentador de fato preto, cabelo ruivo e bigode
+- `farmer` — camponês de chapéu e colete às riscas
+- `soldier` — soldado aliado de capacete verde-oliva
+- `ruso` — soldado soviético de ushanka e casaco castanho
+- `general` — general de boné de pala e casaco verde-cinza
+- `dictator` — ditador (cabelo escuro de risca, bigode pequeno, uniforme castanho; sem simbologia)
+- `officer` — oficial aliado de boné e casaco caqui
+- `cop` — polícia/detective
+- `granny` — avó/avô de coque e óculos
+
+## Expressões (face)
+- `neutral` — cara normal
+- `happy` — sorriso simples
+- `grin` — sorriso aberto (entusiasmo)
+- `laugh` — a rir às gargalhadas
+- `sad` — triste
+- `worried` — preocupado/nervoso
+- `angry` — zangado
+- `surprised` — surpreso
+- `shocked` — chocado (boca muito aberta)
+- `thinking` — a pensar (olha para cima)
+- `smug` — convencido/espertalhão
+- `confused` — confuso
+- `excited` — olhos em estrela, muito entusiasmado
+- `sleepy` — com sono
+- `dizzy` — tonto/KO
+- `wink` — pisca o olho
+- `proud` — orgulhoso
+- `scared` — com medo
+
+## Animações (act / pose)
+- `idle` — parado, a respirar
+- `talk` — a falar com gestos de mãos (param energy 0-2)
+- `walk` — a andar (usar com "to")
+- `run` — a correr (usar com "to")
+- `jump` — um salto
+- `wave` — acena com a mão
+- `point` — aponta para a frente (para um objecto/ecrã)
+- `point_up` — aponta para cima (ideia, topo do ecrã)
+- `present` — apresenta com a mão aberta (mostrar algo)
+- `think` — mão no queixo a pensar
+- `shrug` — encolhe os ombros "não sei"
+- `celebrate` — braços no ar a saltar de alegria
+- `dance` — a dançar
+- `sit` — sentado (numa cadeira/banco/chão)
+- `type` — sentado a escrever no portátil/computador
+- `scared` — assustado a tremer
+- `angry` — zangado, punhos fechados a tremer
+- `laugh` — dobrado a rir
+- `cry` — a chorar com as mãos na cara
+- `facepalm` — mão na testa (facepalm)
+- `hold` — segura um objecto à frente (usar "holds")
+- `spin` — rodopia
+- `faint` — desmaia / cai para trás
+
+## Objectos (prop.kind)
+- `lightbulb` — lâmpada (ideia) com brilho
+- `book` — livro fechado
+- `book_open` — livro aberto
+- `laptop` — portátil
+- `ram` — pastilha de memória RAM
+- `cpu` — processador/chip
+- `brain` — cérebro com dobras e faíscas de neurónios. params: glow, sparks, face
+- `gear` — engrenagem a rodar
+- `magnifier` — lupa
+- `question` — ponto de interrogação grande
+- `exclaim` — ponto de exclamação grande
+- `arrow` — seta (rot em graus; 0 = direita)
+- `star` — estrela
+- `heart` — coração a bater (lub-dub). params: bpm, glow, face
+- `clock` — relógio
+- `coin` — moeda com $
+- `money` — nota de dinheiro
+- `rocket` — foguetão
+- `globe` — globo terrestre
+- `flask` — frasco de laboratório
+- `atom` — átomo com electrões
+- `tree` — árvore
+- `house` — casa
+- `phone` — telemóvel
+- `check` — visto verde
+- `cross` — cruz vermelha (errado)
+- `cloud` — nuvem
+- `sun` — sol
+- `moon` — lua
+- `trophy` — troféu
+- `key` — chave
+- `lock` — cadeado
+- `wifi` — símbolo wifi
+- `battery` — bateria (level 0-1)
+- `server` — servidor/base de dados
+- `chair` — cadeira (usar por trás de personagem sentada)
+- `table` — mesa
+- `plant` — planta em vaso
+- `pizza` — fatia de pizza
+- `text` — texto grande (text, color, size). Ideal para títulos/palavras-chave
+- `bubble` — balão de fala (text)
+- `screen` — ecrã/monitor com texto (text) e cor
+- `board` — quadro/cartaz com texto (text)
+- `bars` — gráfico de barras: data [números], labels [textos], colors
+- `linechart` — gráfico de linha: data [números]
+- `pie` — gráfico circular: data [números]
+- `image` — imagem externa (src) — requer host.images
+- `shape` — vector livre: paths [{t:"rect|circle|ellipse|poly|line|arc|text|curve", x,y,w,h,r,pts,fill,stroke,lw,text,size,a0,a1,at,dash}] em coords -0.5..0.5 do tamanho; "at" = segundos para aparecer, "draw":true anima o traço
+- `car_side` — carro desportivo em vista lateral (vira para a direita). params: color, wheels, jets 0..1 (gás frio dos propulsores: "down" por baixo, "rear" atrás, "roof" em cima), glow, hover (elevação 0..1)
+- `tank` — depósito/cilindro de gás comprimido (COPV, fibra de carbono). params: color, label, pressure 0..1 (cor de aviso), glow
+- `gauge` — manómetro/mostrador semicircular. params: value 0..1 (ponteiro anima), label, max, color
+- `nozzle` — bocal/propulsor com jacto de gás frio. params: dir (graus; 90=para baixo), power 0..1
+- `ramp` — rampa/plano inclinado (vista lateral). params: color, angle
+- `spotlight` — foco de luz cónico vindo de cima. params: color, width
+- `crowd` — multidão de bonecos (cabeças e ombros). params: n, colors
+- `callout` — etiqueta com seta apontadora (text, dir: left|right|up|down). params: color
+- `sparks` — faíscas/explosão de partículas. params: color, n
+- `tank_side` — tanque em vista lateral (vira à direita). params: color, flip, fire (disparo), moving
+- `plane_side` — avião em vista lateral (vira à direita). params: color, trail (rasto de fumo)
+- `explosion` — explosão animada com bola de fogo e fumo. params: color
+- `warmap` — mapa de guerra em mesa/quadro com setas animadas. params: arrows [{x1,y1,x2,y2,c}], marks [{x,y,t}], title
+- `banner` — bandeira/estandarte de 2-3 faixas (colors, vertical). Sem simbologia real; usa cores para identificar lados
+- `stat` — número grande com legenda (value, label, color): para factos e estatísticas
+- `lungs` — pulmões que respiram (traqueia + brônquios). params: rate (resp/min), glow, face
+- `stomach` — estômago (bolsa em J com movimentos de mistura). params: glow, face
+- `intestine` — intestino delgado em serpentina com ondas de peristaltismo. params: rows, glow, face
+- `kidneys` — rins (par) com ureteres. params: glow, face
+- `liver` — fígado (cunha castanha). params: glow, face
+- `skeleton` — esqueleto completo (206 ossos no adulto). params: glow, pose
+- `neuron` — neurónio com impulso eléctrico a viajar pelo axónio. params: pulses, color
+- `rbc` — glóbulo vermelho (disco bicôncavo). params: spin
+- `body_outline` — silhueta do corpo com órgãos no sítio certo; organs:[brain,lungs,heart,liver,stomach,intestine,kidneys], highlight:"heart" destaca um (os outros esmaecem). params: face
+
+## Cenários (scene.bg)
+- `room` — sala/quarto acolhedor com janela e quadro
+- `classroom` — sala de aula com quadro verde
+- `office` — escritório moderno com janela para a cidade
+- `lab` — laboratório com bancada e frascos
+- `outdoor` — exterior: céu, colinas, relva e árvore
+- `city` — cidade ao fim da tarde
+- `space` — espaço com estrelas e planeta
+- `night` — noite com lua e casas
+- `beach` — praia com mar e areia
+- `kitchen` — cozinha
+- `stage` — palco com cortinas e foco de luz
+- `studio` — fundo liso de estúdio (color) com vinheta
+- `grid` — folha quadriculada (matemática/explicação)
+- `tech` — fundo tecnológico escuro com grelha neon
+- `gradient` — gradiente vertical (color, color2)
+- `image` — imagem externa (src) — requer host.images
+- `scenic` — compositor de camadas com profundidade (sky, ground, groundColor, groundTex dirt|snow|sand|planks|cobble, layers[], lights[], fg[]): ver AGENT_GUIDE
+- `launch_night` — noite estrelada com horizonte laranja e cidade ao fundo (pintado)
+- `desert_dusk` — deserto ao pôr do sol (pintado)
+- `highway` — estrada de dia com colinas e céu limpo
+- `garage` — garagem/oficina escura com luzes de tecto e chão polido
+- `blueprint` — planta técnica azul (diagramas e engenharia)
+- `sky_day` — céu azul aberto com nuvens (voo/atmosfera)
+- `space_dark` — espaço profundo com estrelas e planeta
+- `lab_dark` — laboratório escuro com neon âmbar
+- `berlin_ruins` — cidade em ruínas ao anoitecer com fumo e fogo (guerra)
+- `eastern_snow` — frente leste: neve, pinheiros e céu cinzento-azulado
+- `war_room` — sala de comando aliada: parede de tábuas, candeeiro quente
+- `bunker` — bunker de betão, luz fraca e tubos (final da guerra)
+- `normandy` — praia da Normandia ao amanhecer: mar, navios, obstáculos
+- `bomber_night` — céu nocturno com holofotes e bombardeiros
+- `factory` — fábrica industrial com chaminés e brilho laranja (produção)
+- `snow_night_street` — rua de aldeia à noite com neve e janelas quentes
+- `inside_body` — interior do corpo: tecido rosa/vermelho, veias e células (anatomia)
+- `vessel` — dentro de um vaso sanguíneo: túnel com glóbulos a fluir
+- `brain_space` — espaço neural escuro com neurónios a brilhar (ciano/magenta)
+- `lungs_bg` — alvéolos cor-de-rosa claros com bolhas de ar
+- `gut_bg` — canais do sistema digestivo (tubos cor de laranja/rosa)
+- `clinic` — consultório claro: parede, janela de dia, cruz médica
+- `xray` — ecrã de raio-X: azul escuro com brilho ciano e grelha
+- `set3d` — cenário 3D (three.js) pintado com tinta e sombras: {kind:"set3d", kit:"plaza_night|city_day|western|alley_night|room|classroom|desert_dusk|forest|snow_field|ruins|space|body_tunnel|organ_cave|clinic|ocean|tech_hall", params?, cam?:{pos,look,fov}, objects?:[...], fx?:{...}}
+
+## Transições (scene.transition)
+- `cut` — corte seco (sem efeito)
+- `fade` — fade a partir da cor (color)
+- `wipe_left` — painel de cor varre da direita para a esquerda a revelar a cena
+- `wipe_right` — painel de cor varre da esquerda para a direita
+- `wipe_up` — painel de cor sobe a revelar a cena
+- `zoom` — cena faz zoom-in rápido com flash
+- `pop` — cena salta em elástico a partir do centro
+- `iris` — círculo que abre a partir do centro (estilo cartoon)
+- `slide_up` — cena entra a deslizar de baixo
+- `spin` — cena entra a rodar e a crescer
+- `flash` — clarão branco (exposição alta) que se dissolve a revelar a cena; a cena anterior termina em clarão
+- `whip` — whip-pan: movimento rápido com motion blur horizontal que funde o fim da cena anterior no início da seguinte
+
+## Kits 3D (bg:{kind:"set3d", kit})
+- `plaza_night`
+- `porch_night`
+- `city_day`
+- `western`
+- `alley_night`
+- `room`
+- `classroom`
+- `desert_dusk`
+- `forest`
+- `snow_field`
+- `ruins`
+- `space`
+- `body_tunnel`
+- `organ_cave`
+- `clinic`
+- `ocean`
+- `tech_hall`
+- `street`
+- `yard`
+- `field`
+- `body`
+- `forest_night`
+- `clearing`
+- `forest_clearing`
+- `mountain`
+- `mountain_pass`
+- `cabin`
+- `cabin_night`
+
+## Kits do motor Cinema (meta.engine:"cinema")
+- `street` — street · day
+- `forest` — forest · day
+- `forest_night` — forest · night
+- `clearing` — forest · golden
+- `forest_clearing` — forest · golden
+- `mountain` — mountain · golden
+- `mountain_pass` — mountain · day
+- `cabin` — cabin · interior
+- `cabin_night` — cabin · interior
+- `river` — river · golden
+- `riverbank` — river · day
+- `plaza_night` — street · night
+- `city_day` — street · day
+- `western` — street · golden
+- `alley_night` — street · night
+- `room` — cabin · interior
+- `classroom` — cabin · interior
+- `clinic` — cabin · interior
+- `tech_hall` — cabin · interior
+- `desert_dusk` — mountain · dusk
+- `ruins` — mountain · golden
+- `ocean` — river · day
+- `space` — mountain · night
+- `waterfall` — river · day
+- `snow_field` — mountain · night
+- `porch_night` — cabin · interior
+- `body_tunnel` — cabin · organ
+- `organ_cave` — cabin · organ
+- `field` — forest · day
+- `yard` — mountain · day
+
+## Planos de câmara 3D (scene.shot)
+- `orbit_l`
+- `orbit_r`
+- `dolly_in`
+- `dolly_out`
+- `crane`
+- `low`
+
+## Outros
+- formatos: 9:16, 16:9, 1:1, 4:5
+- prop.fx: pop, fade, grow, drop, slide_l, slide_r, none
+- prop.motion: float, spin, shake, pulse, wiggle
+- chapéus (actor.hat): helmet, ushanka, peaked, cap, tophat, chef, crown, beanie, grad, hardhat, wizard, police
+- cabelo (actor.hair): short, long, pony, spiky, bun, curly, bald, none
+- roupa (actor.outfitType): tee, suit, lab, hoodie, apron, dress, stripe
+- porte físico (actor.build): adult, stout, kid, large
+- easing: linear, in, out, inOut, back, elastic, bounce
+
+## Vozes
+- **pt-br**: `pf_dora` (feminina, natural), `pm_alex` (masculina), `pm_santa` (masculina grave)
+- **en-us**: `af_heart` (female, warm (best quality)), `af_bella` (female, bright), `am_adam` (male), `am_michael` (male, clear), `af_nicole` (female, soft)
+- **en-gb**: `bf_emma` (female UK), `bm_george` (male UK)
+- **es**: `ef_dora` (femenina), `em_alex` (masculina)
+- **fr-fr**: `ff_siwis` (féminine)
+- **it**: `if_sara` (femminile), `im_nicola` (maschile)
+
+## Operações de edição
+- `set_meta` {op, meta:{format,fps,animFps,lang,voice,speed,captions:{...},transition}}
+- `add_scene` {op, scene:{...}, after?:sceneId|index}
+- `remove_scene` {op, id}
+- `duplicate_scene` {op, id}
+- `move_scene` {op, id, to:index}
+- `update_scene` {op, id, set:{bg,transition,camera,title,minDur,...}} (null apaga um campo)
+- `set_narration` {op, id, text} ou {op, id, lines:[{text,who?,voice?}]}
+- `add_actor` {op, scene, actor:{id,char,x,y,scale,flip,face,pose}}
+- `update_actor` {op, scene, actor:id, set:{...}}
+- `remove_actor` {op, scene, actor:id}
+- `swap_character` {op, scene?, actor?, from?, to:charId} — troca a personagem (em 1 actor, numa cena ou em todo o vídeo)
+- `add_prop` {op, scene, prop:{id,kind,x,y,size,at,fx,motion,text,...}}
+- `update_prop` {op, scene, prop:id, set:{...}}
+- `remove_prop` {op, scene, prop:id}
+- `add_beat` {op, scene, beat:{t,actor,act,to,face,prop,show,hide,move,camera,fx,...}}
+- `remove_beat` {op, scene, index}
+- `clear_beats` {op, scene}
+- `set_voice` {op, voice, scene?}

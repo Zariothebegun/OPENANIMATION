@@ -1,0 +1,878 @@
+{
+ "meta": {
+  "format": "9:16",
+  "lang": "pt-br",
+  "voice": "pm_santa",
+  "quality": "standard",
+  "style": "painted",
+  "transition": "cut"
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "bg": "bomber_night",
+   "transition": "cut",
+   "title": {
+    "text": "COMO HITLER\nFOI DERROTADO?",
+    "at": 0.1,
+    "dur": 3.0
+   },
+   "actors": [
+    {
+     "id": "o",
+     "char": "officer",
+     "face": "worried",
+     "x": 0.3
+    },
+    {
+     "id": "d",
+     "char": "dictator",
+     "face": "smug",
+     "x": 0.74,
+     "flip": true
+    }
+   ],
+   "props": [
+    {
+     "id": "s",
+     "kind": "stat",
+     "x": 0.5,
+     "y": 0.4,
+     "size": 0.34,
+     "at": "@quarenta",
+     "fx": "none",
+     "p": {
+      "value": "1941→1945",
+      "label": "quatro anos",
+      "color": "#ffd23f"
+     }
+    }
+   ],
+   "lines": [
+    {
+     "who": "o",
+     "text": "Em mil novecentos e quarenta e um, Hitler dominava grande parte da Europa. Quatro anos depois, tinha perdido tudo."
+    }
+   ],
+   "beats": [
+    {
+     "t": "@perdido",
+     "actor": "d",
+     "face": "worried"
+    }
+   ],
+   "camera": {
+    "zoom": [
+     1.0,
+     1.12
+    ]
+   }
+  },
+  {
+   "id": "ussr",
+   "bg": "eastern_snow",
+   "transition": "wipe_right",
+   "actors": [
+    {
+     "id": "r",
+     "char": "ruso",
+     "face": "angry",
+     "x": 0.3
+    },
+    {
+     "id": "d",
+     "char": "dictator",
+     "face": "angry",
+     "x": 0.76,
+     "flip": true
+    }
+   ],
+   "props": [
+    {
+     "id": "tk",
+     "kind": "tank_side",
+     "x": 0.55,
+     "y": 0.66,
+     "size": 0.5,
+     "at": 0.2,
+     "fx": "none",
+     "p": {
+      "moving": true,
+      "color": "#6a7a58"
+     },
+     "z": "back"
+    },
+    {
+     "id": "c",
+     "kind": "callout",
+     "x": 0.5,
+     "y": 0.17,
+     "size": 0.7,
+     "at": "@União",
+     "fx": "pop",
+     "p": {
+      "text": "Junho de 1941",
+      "dir": "down"
+     }
+    }
+   ],
+   "lines": [
+    {
+     "who": "r",
+     "text": "Primeiro erro: invadir a União Soviética, e arrastar o exército para o inverno russo."
+    }
+   ],
+   "beats": [
+    {
+     "t": 0.2,
+     "prop": "tk",
+     "move": {
+      "x": 0.35
+     },
+     "dur": 3.5,
+     "ease": "linear"
+    }
+   ]
+  },
+  {
+   "id": "usa",
+   "bg": "factory",
+   "transition": "zoom",
+   "actors": [
+    {
+     "id": "o",
+     "char": "officer",
+     "face": "proud",
+     "x": 0.28
+    },
+    {
+     "id": "s",
+     "char": "soldier",
+     "face": "happy",
+     "x": 0.76,
+     "flip": true
+    }
+   ],
+   "props": [
+    {
+     "id": "pl",
+     "kind": "plane_side",
+     "x": 0.55,
+     "y": 0.28,
+     "size": 0.5,
+     "at": "@Estados",
+     "fx": "slide_l",
+     "p": {
+      "trail": true
+     }
+    },
+    {
+     "id": "c",
+     "kind": "callout",
+     "x": 0.5,
+     "y": 0.17,
+     "size": 0.7,
+     "at": "@Estados",
+     "fx": "pop",
+     "p": {
+      "text": "EUA entram · dez 1941",
+      "dir": "down",
+      "color": "#7ab8ff"
+     }
+    }
+   ],
+   "lines": [
+    {
+     "who": "o",
+     "text": "No fim de quarenta e um, entram os Estados Unidos, com uma indústria gigante."
+    }
+   ],
+   "beats": [
+    {
+     "t": "@gigante",
+     "actor": "s",
+     "act": "celebrate",
+     "dur": 1.5
+    }
+   ],
+   "camera": {
+    "zoom": [
+     1.0,
+     1.14
+    ]
+   }
+  },
+  {
+   "id": "stal",
+   "bg": "berlin_ruins",
+   "transition": "wipe_left",
+   "particles": {
+    "kind": "snow",
+    "n": 90
+   },
+   "grade": {
+    "c": "#5a7ad0",
+    "a": 0.2
+   },
+   "actors": [
+    {
+     "id": "r",
+     "char": "ruso",
+     "face": "proud",
+     "x": 0.28
+    },
+    {
+     "id": "d",
+     "char": "dictator",
+     "face": "worried",
+     "x": 0.76,
+     "flip": true
+    }
+   ],
+   "props": [
+    {
+     "id": "s1",
+     "kind": "stat",
+     "x": 0.5,
+     "y": 0.2,
+     "size": 0.3,
+     "at": "@cercados",
+     "fx": "none",
+     "p": {
+      "value": "220 000",
+      "label": "soldados alemães cercados",
+      "color": "#ff8a5c"
+     }
+    },
+    {
+     "id": "s2",
+     "kind": "stat",
+     "x": 0.5,
+     "y": 0.2,
+     "size": 0.3,
+     "at": "@fevereiro",
+     "fx": "none",
+     "p": {
+      "value": "91 000",
+      "label": "rendem-se em fevereiro de 1943",
+      "color": "#ffd23f"
+     }
+    }
+   ],
+   "lines": [
+    {
+     "who": "r",
+     "text": "Em Estalinegrado, mais de duzentos e vinte mil alemães ficaram cercados. Em fevereiro de quarenta e três, uns noventa e um mil renderam-se."
+    }
+   ],
+   "beats": [
+    {
+     "t": "@fevereiro",
+     "prop": "s1",
+     "hide": true
+    },
+    {
+     "t": "@renderam",
+     "camera": {
+      "focus": "d",
+      "part": "face",
+      "zoom": 1.9,
+      "dur": 0.6
+     }
+    },
+    {
+     "t": "@renderam",
+     "actor": "d",
+     "face": "shocked"
+    }
+   ]
+  },
+  {
+   "id": "kursk",
+   "bg": "desert_dusk",
+   "transition": "pop",
+   "actors": [
+    {
+     "id": "g",
+     "char": "general",
+     "face": "angry",
+     "x": 0.8,
+     "flip": true,
+     "scale": 0.75
+    }
+   ],
+   "props": [
+    {
+     "id": "t1",
+     "kind": "tank_side",
+     "x": 0.2,
+     "y": 0.7,
+     "size": 0.36,
+     "at": 0.1,
+     "fx": "none",
+     "p": {
+      "fire": true,
+      "color": "#6a6a52"
+     },
+     "z": "back"
+    },
+    {
+     "id": "t2",
+     "kind": "tank_side",
+     "x": 0.58,
+     "y": 0.7,
+     "size": 0.34,
+     "at": 0.1,
+     "fx": "none",
+     "p": {
+      "flip": true,
+      "fire": true,
+      "color": "#7a5a42"
+     },
+     "z": "back"
+    },
+    {
+     "id": "e",
+     "kind": "explosion",
+     "x": 0.43,
+     "y": 0.62,
+     "size": 0.45,
+     "at": "@falhou",
+     "fx": "none"
+    },
+    {
+     "id": "c",
+     "kind": "callout",
+     "x": 0.5,
+     "y": 0.17,
+     "size": 0.7,
+     "at": "@Kursk",
+     "fx": "pop",
+     "p": {
+      "text": "Kursk · verão de 1943",
+      "dir": "down"
+     }
+    }
+   ],
+   "lines": [
+    {
+     "who": "g",
+     "text": "No verão de quarenta e três, a última grande ofensiva alemã no leste, em Kursk, falhou."
+    }
+   ],
+   "beats": [
+    {
+     "t": "@falhou",
+     "fx": "shake",
+     "dur": 0.4,
+     "amp": 0.012
+    },
+    {
+     "t": "@falhou",
+     "camera": {
+      "zoom": 1.25,
+      "x": -0.05,
+      "dur": 0.9
+     }
+    }
+   ]
+  },
+  {
+   "id": "bomb",
+   "bg": "bomber_night",
+   "transition": "wipe_up",
+   "actors": [
+    {
+     "id": "d",
+     "char": "dictator",
+     "face": "shocked",
+     "x": 0.3
+    }
+   ],
+   "props": [
+    {
+     "id": "p1",
+     "kind": "plane_side",
+     "x": 0.3,
+     "y": 0.18,
+     "size": 0.4,
+     "at": 0.1,
+     "fx": "fade",
+     "p": {
+      "color": "#3a3f50",
+      "trail": true
+     }
+    },
+    {
+     "id": "p2",
+     "kind": "plane_side",
+     "x": 0.7,
+     "y": 0.28,
+     "size": 0.36,
+     "at": 0.3,
+     "fx": "fade",
+     "p": {
+      "color": "#3a3f50"
+     }
+    },
+    {
+     "id": "e",
+     "kind": "explosion",
+     "x": 0.7,
+     "y": 0.66,
+     "size": 0.4,
+     "at": "@Hamburgo",
+     "fx": "none"
+    },
+    {
+     "id": "c",
+     "kind": "callout",
+     "x": 0.5,
+     "y": 0.4,
+     "size": 0.7,
+     "at": "@Hamburgo",
+     "fx": "pop",
+     "p": {
+      "text": "Hamburgo · julho 1943",
+      "dir": "down",
+      "color": "#ff8a5c"
+     }
+    }
+   ],
+   "lines": [
+    {
+     "who": "d",
+     "text": "Ao mesmo tempo, os bombardeamentos aliados devastavam cidades alemãs, como Hamburgo."
+    }
+   ],
+   "beats": [
+    {
+     "t": "w0",
+     "camera": {
+      "focus": "d",
+      "part": "face",
+      "zoom": 1.8,
+      "cut": true,
+      "dur": 0.01
+     }
+    },
+    {
+     "t": "@Hamburgo",
+     "camera": {
+      "zoom": 1.05,
+      "x": 0,
+      "y": 0,
+      "dur": 0.7
+     }
+    },
+    {
+     "t": "@devastavam",
+     "fx": "flash",
+     "dur": 0.2
+    }
+   ]
+  },
+  {
+   "id": "dday",
+   "bg": "normandy",
+   "transition": "iris",
+   "actors": [
+    {
+     "id": "s",
+     "char": "soldier",
+     "face": "worried",
+     "x": 0.3
+    },
+    {
+     "id": "o",
+     "char": "officer",
+     "face": "angry",
+     "x": 0.74,
+     "flip": true
+    }
+   ],
+   "props": [
+    {
+     "id": "c",
+     "kind": "callout",
+     "x": 0.5,
+     "y": 0.17,
+     "size": 0.7,
+     "at": "@seis",
+     "fx": "pop",
+     "p": {
+      "text": "6 de junho de 1944",
+      "dir": "down"
+     }
+    },
+    {
+     "id": "e",
+     "kind": "explosion",
+     "x": 0.5,
+     "y": 0.5,
+     "size": 0.4,
+     "at": "@Normandia",
+     "fx": "none"
+    }
+   ],
+   "lines": [
+    {
+     "who": "s",
+     "text": "Em seis de junho de quarenta e quatro, os aliados desembarcam na Normandia."
+    },
+    {
+     "who": "o",
+     "text": "Agora, a Alemanha lutava em duas frentes."
+    }
+   ],
+   "beats": [
+    {
+     "t": "l1",
+     "camera": {
+      "focus": "o",
+      "part": "head",
+      "zoom": 1.6,
+      "cut": true,
+      "dur": 0.01
+     }
+    },
+    {
+     "t": "l1e",
+     "camera": {
+      "zoom": 1.05,
+      "x": 0,
+      "y": 0,
+      "dur": 0.4
+     }
+    }
+   ]
+  },
+  {
+   "id": "map",
+   "bg": "war_room",
+   "transition": "wipe_right",
+   "actors": [
+    {
+     "id": "o",
+     "char": "officer",
+     "face": "neutral",
+     "x": 0.22,
+     "scale": 0.8
+    },
+    {
+     "id": "g",
+     "char": "general",
+     "face": "proud",
+     "x": 0.8,
+     "flip": true,
+     "scale": 0.8
+    }
+   ],
+   "props": [
+    {
+     "id": "m",
+     "kind": "warmap",
+     "x": 0.5,
+     "y": 0.3,
+     "size": 0.72,
+     "at": 0.1,
+     "fx": "grow",
+     "p": {
+      "title": "Europa, 1944–45",
+      "arrows": [
+       {
+        "x1": 0.45,
+        "y1": -0.05,
+        "x2": 0.05,
+        "y2": -0.02,
+        "c": "#c0392b",
+        "at": 0.6
+       },
+       {
+        "x1": -0.45,
+        "y1": 0.05,
+        "x2": -0.05,
+        "y2": 0.0,
+        "c": "#2e6fd0",
+        "at": 1.2
+       }
+      ],
+      "marks": [
+       {
+        "x": 0,
+        "y": 0,
+        "t": "Berlim",
+        "at": 0.3
+       }
+      ]
+     }
+    }
+   ],
+   "lines": [
+    {
+     "who": "o",
+     "text": "O exército soviético avançava do leste, os aliados do oeste."
+    },
+    {
+     "who": "g",
+     "text": "E a frente alemã na Polónia rompeu-se no verão de quarenta e quatro."
+    }
+   ],
+   "beats": [
+    {
+     "t": "l1",
+     "camera": {
+      "focus": "g",
+      "part": "head",
+      "zoom": 1.6,
+      "cut": true,
+      "dur": 0.01
+     }
+    },
+    {
+     "t": "l1e",
+     "camera": {
+      "zoom": 1.05,
+      "x": 0,
+      "y": 0,
+      "dur": 0.4
+     }
+    }
+   ]
+  },
+  {
+   "id": "berlin",
+   "bg": "berlin_ruins",
+   "transition": "slide_up",
+   "actors": [
+    {
+     "id": "r",
+     "char": "ruso",
+     "face": "happy",
+     "x": 0.28
+    },
+    {
+     "id": "s",
+     "char": "soldier",
+     "face": "happy",
+     "x": 0.74,
+     "flip": true
+    }
+   ],
+   "props": [
+    {
+     "id": "c",
+     "kind": "callout",
+     "x": 0.5,
+     "y": 0.17,
+     "size": 0.7,
+     "at": "@abril",
+     "fx": "pop",
+     "p": {
+      "text": "Torgau · 25 abril 1945",
+      "dir": "down"
+     }
+    },
+    {
+     "id": "b1",
+     "kind": "banner",
+     "x": 0.08,
+     "y": 0.3,
+     "size": 0.3,
+     "at": 0.2,
+     "fx": "none",
+     "p": {
+      "colors": [
+       "#c0392b",
+       "#e74c3c"
+      ]
+     }
+    }
+   ],
+   "lines": [
+    {
+     "who": "r",
+     "text": "Em abril de quarenta e cinco, os soviéticos cercaram Berlim."
+    },
+    {
+     "who": "s",
+     "text": "No dia vinte e cinco, encontraram os americanos no rio Elba."
+    }
+   ],
+   "beats": [
+    {
+     "t": "l1",
+     "actor": "r",
+     "act": "wave",
+     "dur": 1.2
+    },
+    {
+     "t": "l1e",
+     "camera": {
+      "zoom": 1.12,
+      "dur": 1.0
+     }
+    }
+   ]
+  },
+  {
+   "id": "bunker",
+   "bg": "bunker",
+   "transition": "fade",
+   "actors": [
+    {
+     "id": "d",
+     "char": "dictator",
+     "face": "sad",
+     "x": 0.5
+    }
+   ],
+   "props": [
+    {
+     "id": "c",
+     "kind": "callout",
+     "x": 0.5,
+     "y": 0.17,
+     "size": 0.7,
+     "at": "@trinta",
+     "fx": "pop",
+     "p": {
+      "text": "30 de abril de 1945",
+      "dir": "down",
+      "color": "#cfd5df"
+     }
+    }
+   ],
+   "lines": [
+    {
+     "who": "d",
+     "text": "A trinta de abril, com os soviéticos a poucas ruas, Hitler suicidou-se no bunker."
+    }
+   ],
+   "beats": [
+    {
+     "t": "@suicidou",
+     "camera": {
+      "focus": "d",
+      "part": "face",
+      "zoom": 2.2,
+      "dur": 2.0
+     }
+    }
+   ],
+   "camera": {
+    "focus": "d",
+    "part": "head",
+    "zoom": 1.4
+   }
+  },
+  {
+   "id": "end",
+   "bg": "sky_day",
+   "transition": "wipe_left",
+   "particles": {
+    "kind": "dust",
+    "n": 30,
+    "color": "#fff3c0"
+   },
+   "actors": [
+    {
+     "id": "s",
+     "char": "soldier",
+     "face": "excited",
+     "x": 0.22
+    },
+    {
+     "id": "r",
+     "char": "ruso",
+     "face": "happy",
+     "x": 0.5
+    },
+    {
+     "id": "o",
+     "char": "officer",
+     "face": "proud",
+     "x": 0.8,
+     "flip": true
+    }
+   ],
+   "props": [
+    {
+     "id": "c",
+     "kind": "callout",
+     "x": 0.5,
+     "y": 0.17,
+     "size": 0.8,
+     "at": "@oito",
+     "fx": "pop",
+     "p": {
+      "text": "8 de maio de 1945 · Dia da Vitória",
+      "dir": "down",
+      "color": "#7ae0a0"
+     }
+    },
+    {
+     "id": "cr",
+     "kind": "crowd",
+     "x": 0.5,
+     "y": 0.64,
+     "size": 0.9,
+     "at": 0.2,
+     "fx": "fade",
+     "z": "back"
+    }
+   ],
+   "lines": [
+    {
+     "who": "o",
+     "text": "A Alemanha rendeu-se sem condições em maio. O oito de maio ficou como o Dia da Vitória na Europa."
+    }
+   ],
+   "beats": [
+    {
+     "t": "@Alemanha",
+     "actor": "s",
+     "act": "celebrate",
+     "dur": 2
+    },
+    {
+     "t": "@Alemanha",
+     "actor": "r",
+     "act": "celebrate",
+     "dur": 2
+    }
+   ],
+   "camera": {
+    "zoom": [
+     1.0,
+     1.1
+    ]
+   }
+  },
+  {
+   "id": "close",
+   "bg": "snow_night_street",
+   "transition": "fade",
+   "actors": [
+    {
+     "id": "o",
+     "char": "officer",
+     "face": "neutral",
+     "x": 0.5
+    }
+   ],
+   "lines": [
+    {
+     "who": "o",
+     "text": "Foi a soma de erros alemães, de aliados poderosos e de milhões de vidas."
+    }
+   ],
+   "beats": [],
+   "camera": {
+    "focus": "o",
+    "part": "body",
+    "zoom": 1.35
+   }
+  }
+ ]
+}

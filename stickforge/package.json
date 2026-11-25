@@ -1,0 +1,25 @@
+{
+  "name": "stickforge",
+  "version": "0.2.0",
+  "description": "StickForge: motor de vídeos explicativos 2D com cenários 3D (three.js), DSL JSON para agentes de IA, editor e render rápido",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server/api.js",
+    "render": "node src/cli.js render",
+    "validate": "node src/cli.js validate",
+    "catalog": "node scripts/gen-catalog.mjs",
+    "bench": "node bench.mjs examples/ram60.json",
+    "setup": "bash scripts/setup.sh"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "esbuild": "^0.28.2",
+    "playwright": "^1.65.1",
+    "postprocessing": "^6.39.6",
+    "skia-canvas": "^4.0.1",
+    "three": "^0.170.0"
+  },
+  "type": "module"
+}

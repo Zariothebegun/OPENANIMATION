@@ -1,0 +1,563 @@
+{
+  "meta": {"style":"flat",
+    "format": "9:16",
+    "lang": "pt-br",
+    "voice": "pf_dora",
+    "quality": "standard",
+    "captions": {
+      "enabled": true,
+      "y": 0.8
+    }
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "bg": "tech",
+      "transition": "pop",
+      "title": {
+        "text": "O QUE É A\nMEMÓRIA RAM?",
+        "at": 0.2,
+        "dur": 2.6
+      },
+      "actors": [
+        {
+          "id": "n",
+          "char": "nerd",
+          "face": "excited",
+          "x": 0.5
+        }
+      ],
+      "props": [
+        {
+          "id": "ram",
+          "kind": "ram",
+          "x": 0.5,
+          "y": 0.4,
+          "size": 0.4,
+          "at": "w3",
+          "fx": "drop",
+          "motion": "float"
+        }
+      ],
+      "lines": [
+        {
+          "text": "Porque é que o teu telemóvel fica lento quando abres muitas aplicações?"
+        }
+      ],
+      "beats": [
+        {
+          "t": "w0",
+          "act": "point_up",
+          "dur": 2.5
+        },
+        {
+          "t": "end-1",
+          "face": "worried"
+        },
+        {
+          "t": 0.2,
+          "camera": {
+            "zoom": 1.15,
+            "dur": 2.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "what",
+      "bg": "classroom",
+      "transition": "wipe_left",
+      "actors": [
+        {
+          "id": "n",
+          "char": "nerd",
+          "face": "happy",
+          "x": 0.3
+        },
+        {
+          "id": "s",
+          "char": "student",
+          "face": "thinking",
+          "x": 0.72
+        }
+      ],
+      "props": [
+        {
+          "id": "b",
+          "kind": "board",
+          "x": 0.5,
+          "y": 0.2,
+          "size": 0.55,
+          "text": "RAM = memória de trabalho",
+          "at": 0.6,
+          "fx": "grow"
+        }
+      ],
+      "lines": [
+        {
+          "who": "s",
+          "text": "O que é a RAM, afinal?"
+        },
+        {
+          "who": "n",
+          "text": "É a memória de trabalho do computador. Guarda tudo o que estás a usar agora."
+        }
+      ],
+      "beats": [
+        {
+          "t": "l1",
+          "act": "present",
+          "dur": 2.5
+        },
+        {
+          "t": "l1",
+          "actor": "s",
+          "face": "surprised"
+        },
+        {
+          "t": "w8",
+          "face": "grin",
+          "actor": "n"
+        }
+      ]
+    },
+    {
+      "id": "desk",
+      "bg": "room",
+      "transition": "slide_up",
+      "actors": [
+        {
+          "id": "g",
+          "char": "girl",
+          "face": "happy",
+          "x": 0.35
+        },
+        {
+          "id": "b",
+          "char": "boss",
+          "face": "neutral",
+          "x": 0.7
+        }
+      ],
+      "props": [
+        {
+          "id": "t",
+          "kind": "table",
+          "x": 0.5,
+          "y": 0.56,
+          "size": 0.6
+        },
+        {
+          "id": "bk",
+          "kind": "book",
+          "x": 0.82,
+          "y": 0.34,
+          "size": 0.2,
+          "at": "w6",
+          "fx": "pop",
+          "motion": "wiggle"
+        },
+        {
+          "id": "lp",
+          "kind": "laptop",
+          "x": 0.28,
+          "y": 0.5,
+          "size": 0.32,
+          "at": "w1",
+          "fx": "pop"
+        }
+      ],
+      "lines": [
+        {
+          "who": "g",
+          "text": "Imagina uma secretária. A RAM é o tamanho da mesa."
+        },
+        {
+          "who": "b",
+          "text": "Quanto maior a mesa, mais coisas ao mesmo tempo."
+        }
+      ],
+      "beats": [
+        {
+          "t": "l0",
+          "actor": "g",
+          "act": "present",
+          "dur": 3
+        },
+        {
+          "t": "l1",
+          "actor": "b",
+          "act": "point",
+          "dur": 2.5
+        },
+        {
+          "t": "l1",
+          "actor": "b",
+          "face": "smug"
+        }
+      ]
+    },
+    {
+      "id": "storage",
+      "bg": "grid",
+      "transition": "iris",
+      "actors": [
+        {
+          "id": "n",
+          "char": "nerd",
+          "face": "thinking",
+          "x": 0.5
+        }
+      ],
+      "props": [
+        {
+          "id": "ssd",
+          "kind": "server",
+          "x": 0.2,
+          "y": 0.4,
+          "size": 0.26,
+          "at": "w4",
+          "fx": "pop"
+        },
+        {
+          "id": "r",
+          "kind": "ram",
+          "x": 0.74,
+          "y": 0.4,
+          "size": 0.3,
+          "at": "w12",
+          "fx": "pop",
+          "motion": "pulse"
+        },
+        {
+          "id": "tx1",
+          "kind": "text",
+          "x": 0.2,
+          "y": 0.56,
+          "size": 0.07,
+          "text": "DISCO\nlento",
+          "color": "#ffd23f",
+          "at": "w5",
+          "fx": "pop"
+        },
+        {
+          "id": "tx2",
+          "kind": "text",
+          "x": 0.74,
+          "y": 0.54,
+          "size": 0.07,
+          "text": "RAM\nrápida",
+          "color": "#7cf5c4",
+          "at": "w13",
+          "fx": "pop"
+        }
+      ],
+      "lines": [
+        {
+          "text": "O disco guarda os teus ficheiros para sempre, mas é lento. A RAM é muito mais rápida, só que esquece tudo ao desligar."
+        }
+      ],
+      "beats": [
+        {
+          "t": "w4",
+          "act": "point",
+          "angle": 90,
+          "dur": 2.5
+        },
+        {
+          "t": "w12",
+          "act": "point",
+          "angle": 110,
+          "dur": 2.5
+        },
+        {
+          "t": "w18",
+          "face": "surprised"
+        }
+      ]
+    },
+    {
+      "id": "speed",
+      "bg": "tech",
+      "transition": "zoom",
+      "actors": [
+        {
+          "id": "c",
+          "char": "cool",
+          "face": "smug",
+          "x": 0.28
+        }
+      ],
+      "props": [
+        {
+          "id": "bars",
+          "kind": "bars",
+          "x": 0.62,
+          "y": 0.34,
+          "size": 0.5,
+          "data": [
+            1,
+            8,
+            40,
+            100
+          ],
+          "labels": [
+            "HDD",
+            "SSD",
+            "RAM",
+            "CPU"
+          ],
+          "text": "Velocidade",
+          "at": 0.6,
+          "fx": "grow"
+        },
+        {
+          "id": "rk",
+          "kind": "rocket",
+          "x": 0.82,
+          "y": 0.68,
+          "size": 0.2,
+          "at": "w10",
+          "fx": "drop",
+          "motion": "float"
+        }
+      ],
+      "lines": [
+        {
+          "who": "c",
+          "text": "Por isso o processador vai buscar tudo à RAM, não ao disco. Cada segundo conta."
+        }
+      ],
+      "beats": [
+        {
+          "t": "w0",
+          "act": "present",
+          "dur": 3
+        },
+        {
+          "t": "w9",
+          "fx": "flash",
+          "dur": 0.3
+        },
+        {
+          "t": "w9",
+          "face": "excited"
+        }
+      ]
+    },
+    {
+      "id": "full",
+      "bg": "office",
+      "transition": "wipe_right",
+      "actors": [
+        {
+          "id": "w",
+          "char": "worker",
+          "face": "worried",
+          "x": 0.35
+        },
+        {
+          "id": "b",
+          "char": "boss",
+          "face": "angry",
+          "x": 0.74
+        }
+      ],
+      "props": [
+        {
+          "id": "ch",
+          "kind": "chair",
+          "x": 0.28,
+          "y": 0.58,
+          "size": 0.2
+        },
+        {
+          "id": "scr",
+          "kind": "screen",
+          "x": 0.5,
+          "y": 0.3,
+          "size": 0.34,
+          "text": "A carregar...",
+          "at": 0.3,
+          "fx": "grow"
+        },
+        {
+          "id": "cl",
+          "kind": "clock",
+          "x": 0.84,
+          "y": 0.16,
+          "size": 0.16,
+          "at": 0.3,
+          "fx": "pop"
+        }
+      ],
+      "lines": [
+        {
+          "who": "w",
+          "text": "Mas se a RAM encher, o computador começa a arrastar-se."
+        },
+        {
+          "who": "b",
+          "text": "Está tudo parado! Fecha alguma coisa!"
+        }
+      ],
+      "beats": [
+        {
+          "t": "l0",
+          "actor": "w",
+          "act": "scared",
+          "dur": 3
+        },
+        {
+          "t": "l1",
+          "actor": "b",
+          "act": "angry",
+          "dur": 2.5
+        },
+        {
+          "t": "l1",
+          "fx": "shake",
+          "dur": 0.5
+        },
+        {
+          "t": "l1",
+          "actor": "w",
+          "face": "shocked"
+        }
+      ]
+    },
+    {
+      "id": "tips",
+      "bg": "room",
+      "transition": "wipe_up",
+      "actors": [
+        {
+          "id": "h",
+          "char": "hero",
+          "face": "proud",
+          "x": 0.5
+        }
+      ],
+      "props": [
+        {
+          "id": "bulb",
+          "kind": "lightbulb",
+          "x": 0.5,
+          "y": 0.2,
+          "size": 0.2,
+          "at": "w0",
+          "fx": "pop",
+          "motion": "float"
+        },
+        {
+          "id": "ok",
+          "kind": "check",
+          "x": 0.2,
+          "y": 0.4,
+          "size": 0.14,
+          "at": "w7",
+          "fx": "pop"
+        },
+        {
+          "id": "ok2",
+          "kind": "check",
+          "x": 0.8,
+          "y": 0.4,
+          "size": 0.14,
+          "at": "w13",
+          "fx": "pop"
+        }
+      ],
+      "lines": [
+        {
+          "text": "Solução simples: fecha separadores que não usas, ou compra mais RAM. Oito gigas é o mínimo, dezasseis é o ideal."
+        }
+      ],
+      "beats": [
+        {
+          "t": "w0",
+          "act": "point_up",
+          "dur": 2
+        },
+        {
+          "t": "w7",
+          "act": "celebrate",
+          "dur": 1.2
+        },
+        {
+          "t": "w13",
+          "act": "present",
+          "dur": 3
+        },
+        {
+          "t": "end-1",
+          "face": "grin"
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "bg": "stage",
+      "transition": "spin",
+      "actors": [
+        {
+          "id": "a",
+          "char": "nerd",
+          "face": "grin",
+          "x": 0.3
+        },
+        {
+          "id": "b",
+          "char": "student",
+          "face": "excited",
+          "x": 0.7
+        }
+      ],
+      "props": [
+        {
+          "id": "st",
+          "kind": "star",
+          "x": 0.5,
+          "y": 0.3,
+          "size": 0.22,
+          "at": "w2",
+          "fx": "pop",
+          "motion": "spin"
+        },
+        {
+          "id": "hr",
+          "kind": "heart",
+          "x": 0.5,
+          "y": 0.5,
+          "size": 0.14,
+          "at": "w6",
+          "fx": "pop"
+        }
+      ],
+      "lines": [
+        {
+          "who": "a",
+          "text": "Agora já sabes o que é a RAM."
+        },
+        {
+          "who": "b",
+          "text": "Segue para mais! "
+        }
+      ],
+      "beats": [
+        {
+          "t": 0.2,
+          "actor": "a",
+          "act": "wave",
+          "dur": 2
+        },
+        {
+          "t": "l1",
+          "actor": "b",
+          "act": "celebrate",
+          "dur": 2
+        }
+      ]
+    }
+  ]
+}

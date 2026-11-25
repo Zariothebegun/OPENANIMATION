@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StickForge Editor</title>
+<style>
+@font-face { font-family: 'Anton'; src: url('/assets/fonts/Anton-Regular.ttf'); }
+@font-face { font-family: 'Inter'; src: url('/assets/fonts/Inter-ExtraBold.otf'); font-weight: 800; }
+:root { --bg:#14151c; --panel:#1c1e28; --panel2:#232634; --line:#2f3345; --txt:#e8eaf2; --mut:#8b90a5; --acc:#ffd23f; --acc2:#6ee7b7; --bad:#ff6b6b; }
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--txt); font: 13px/1.4 Inter, system-ui, sans-serif; }
+button, select, input, textarea { font: inherit; color: var(--txt); background: var(--panel2); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; }
+button { cursor: pointer; } button:hover { border-color: var(--acc); } button.pri { background: var(--acc); color: #1a1a22; border-color: var(--acc); font-weight: 700; }
+button.sm { padding: 2px 6px; font-size: 12px; }
+#app { display: grid; grid-template-columns: 150px minmax(300px, 1fr) 360px; grid-template-rows: 46px 1fr; height: 100vh; }
+header { grid-column: 1/-1; display: flex; align-items: center; gap: 10px; padding: 0 12px; background: var(--panel); border-bottom: 1px solid var(--line); }
+header b { color: var(--acc); letter-spacing: .5px; } header .sp { flex: 1; } #status { color: var(--mut); font-size: 12px; max-width: 420px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#scenes { background: var(--panel); border-right: 1px solid var(--line); overflow: auto; padding: 8px; }
+.sc { position: relative; margin-bottom: 8px; border: 2px solid transparent; border-radius: 8px; cursor: pointer; background: #000; }
+.sc.sel { border-color: var(--acc); } .sc canvas { display: block; width: 100%; border-radius: 6px; } .sc small { position: absolute; left: 4px; bottom: 3px; background: rgba(0,0,0,.65); padding: 0 5px; border-radius: 4px; font-size: 11px; }
+#center { display: flex; flex-direction: column; align-items: center; padding: 10px; gap: 8px; min-width: 0; overflow: hidden; }
+#stage { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; width: 100%; }
+#cv { max-height: 100%; max-width: 100%; border-radius: 10px; box-shadow: 0 6px 30px #0008; background: #000; }
+#transport { display: flex; gap: 8px; align-items: center; width: 100%; max-width: 760px; } #seek { flex: 1; padding: 0; accent-color: var(--acc); }
+#tl { width: 100%; max-width: 760px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px; position: relative; user-select: none; }
+#tl .row { position: relative; height: 24px; margin-bottom: 3px; } #tl .blk { position: absolute; top: 0; height: 100%; border-radius: 5px; padding: 3px 6px; overflow: hidden; white-space: nowrap; font-size: 11px; cursor: pointer; }
+.blk.scene { background: #2f3a66; border: 1px solid #4a5a9a; } .blk.scene.sel { background: #4a5a9a; } .blk.line { background: #1f5d4b; border: 1px solid #2f8f73; height: 20px; top: 2px; } .blk.beat { background: var(--acc); width: 3px; padding: 0; border-radius: 2px; }
+#ph { position: absolute; top: 0; bottom: 0; width: 2px; background: #fff; pointer-events: none; }
+#side { background: var(--panel); border-left: 1px solid var(--line); overflow: auto; padding: 10px; } #side h4 { margin: 14px 0 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--mut); }
+.f { display: grid; grid-template-columns: 78px 1fr; gap: 6px; align-items: center; margin-bottom: 5px; } .f > label { color: var(--mut); } .f > * { min-width: 0; } .inl { display: flex; gap: 4px; }
+.card { background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 8px; margin-bottom: 8px; } .card .hd { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; font-weight: 700; } .card .hd span { flex: 1; }
+textarea { width: 100%; resize: vertical; min-height: 70px; font-family: ui-monospace, Menlo, monospace; font-size: 11.5px; } .err { color: var(--bad); white-space: pre-wrap; font-size: 12px; } .ok { color: var(--acc2); }
+video { width: 100%; border-radius: 8px; margin-top: 8px; background: #000; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <b>STICKFORGE</b><span style="color:var(--mut)">editor</span>
+    <button id="bVoice" title="Gera a voz (Kokoro) e sincroniza durações/boca/áudio do preview">🔊 Sincronizar voz</button>
+    <span class="sp"></span><span id="status"></span>
+    <select id="qual"><option value="draft">rascunho (rápido)</option><option value="standard" selected>standard 1080p</option><option value="high">alta</option></select>
+    <button class="pri" id="bRender">▶ Renderizar vídeo</button>
+  </header>
+  <aside id="scenes"></aside>
+  <main id="center">
+    <div id="stage"><canvas id="cv" width="360" height="640"></canvas></div>
+    <div id="transport"><button id="bPlay">▶</button><input type="range" id="seek" min="0" max="1000" value="0"><span id="clock">0:00 / 0:00</span></div>
+    <div id="tl"><div class="row" id="trScenes"></div><div class="row" id="trLines"></div><div id="ph"></div></div>
+  </main>
+  <aside id="side"></aside>
+</div>
+<script type="module">
+import { compileScene, drawFrame, FORMATS } from '/engine/scene.js';
+import { applyOps } from '/engine/ops.js';
+import { normalizeProject } from '/engine/validate.js';
+
+const $ = (s) => document.querySelector(s);
+const cat = await (await fetch('/api/catalog')).json();
+await Promise.all([document.fonts.load('20px Anton'), document.fonts.load('800 20px Inter')]);
+const host = { makeCanvas: (w, h) => Object.assign(document.createElement('canvas'), { width: w, height: h }), images: {}, bgCache: new Map() };
+const S = { project: null, version: 0, sel: 0, t: 0, playing: false, plans: [], starts: [], total: 0, voice: {}, audios: [], pushTimer: null };
+
+// ---------- projecto ----------
+const status = (m, bad) => { const e = $('#status'); e.textContent = m; e.style.color = bad ? 'var(--bad)' : ''; };
+function setProject(p, fromServer) {
+  const n = normalizeProject(p); S.project = n.project; if (S.sel >= S.project.scenes.length) S.sel = S.project.scenes.length - 1;
+  recompile(); renderScenes(); renderSide(); draw(); if (!fromServer) schedulePush();
+}
+function schedulePush() { clearTimeout(S.pushTimer); S.pushTimer = setTimeout(async () => { const r = await fetch('/api/project', { method: 'PUT', body: JSON.stringify({ project: S.project }) }); const j = await r.json(); if (j.version) S.version = j.version; else status((j.errors || []).join('; '), true); }, 300); }
+function ops(list) { const r = applyOps(S.project, list); if (r.errors.length) return status(r.errors.join('; '), true); setProject(r.project); }
+function voiceFor(sc) { const v = S.voice[sc.id]; const key = JSON.stringify(sc.lines || sc.narration || ''); return v && v.key === key ? v : null; }
+function recompile() {
+  const m = S.project.meta; S.plans = S.project.scenes.map((sc) => { const v = voiceFor(sc); return compileScene(sc, { ...m, quant: 1 / (m.animFps || 15) }, v ? { lineDurs: v.lineDurs, envs: v.envs } : {}); });
+  let t = 0; S.starts = S.plans.map((p) => { const s = t; t += p.dur; return s; }); S.total = t;
+}
+// ---------- desenho ----------
+function dims(maxH) { const [W, H] = FORMATS[S.project.meta.format]; const k = maxH / H; return [Math.round(W * k), Math.round(H * k)]; }
+function locate(t) { let i = S.starts.length - 1; while (i > 0 && S.starts[i] > t) i--; return [i, Math.min(t - S.starts[i], S.plans[i].dur - 1e-3)]; }
+function draw() {
+  if (!S.plans.length) return; const cv = $('#cv'); const [W, H] = dims(640); if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; host.bgCache.clear(); }
+  const [i, lt] = locate(S.t); drawFrame(cv.getContext('2d'), W, H, S.plans[i], lt, host);
+  $('#clock').textContent = fmt(S.t) + ' / ' + fmt(S.total); $('#seek').value = S.total ? (S.t / S.total) * 1000 : 0; $('#ph').style.left = 6 + (S.t / S.total) * ($('#tl').clientWidth - 12) + 'px';
+}
+const fmt = (t) => Math.floor(t / 60) + ':' + String(Math.floor(t % 60)).padStart(2, '0');
+function renderScenes() {
+  const box = $('#scenes'); box.innerHTML = '';
+  S.project.scenes.forEach((sc, i) => {
+    const d = document.createElement('div'); d.className = 'sc' + (i === S.sel ? ' sel' : ''); const [W, H] = dims(240), c = host.makeCanvas(W, H); d.appendChild(c);
+    drawFrame(c.getContext('2d'), W, H, S.plans[i], Math.min(S.plans[i].dur * 0.45, 2.2), host); const sm = document.createElement('small'); sm.textContent = (i + 1) + ' · ' + S.plans[i].dur.toFixed(1) + 's'; d.appendChild(sm);
+    d.onclick = () => { S.sel = i; S.t = S.starts[i]; renderScenes(); renderSide(); draw(); stopAudio(); }; box.appendChild(d);
+  });
+  const add = document.createElement('button'); add.textContent = '+ cena'; add.style.width = '100%'; add.onclick = () => ops([{ op: 'add_scene', after: S.sel, scene: { bg: 'studio', transition: 'pop', actors: [{ id: 'a', char: 'blue', face: 'happy' }], lines: [{ text: 'Nova cena. Escreve aqui o que a personagem diz.' }] } }]);
+  box.appendChild(add); renderTimeline();
+}
+function renderTimeline() {
+  const a = $('#trScenes'), b = $('#trLines'); a.innerHTML = b.innerHTML = ''; const pct = (t) => (t / S.total) * 100 + '%';
+  S.plans.forEach((p, i) => {
+    const e = document.createElement('div'); e.className = 'blk scene' + (i === S.sel ? ' sel' : ''); e.style.left = pct(S.starts[i]); e.style.width = `calc(${pct(p.dur)} - 2px)`; e.textContent = p.scene.id; e.onclick = () => { S.sel = i; S.t = S.starts[i]; renderScenes(); renderSide(); draw(); }; a.appendChild(e);
+    p.lines.forEach((l) => { const x = document.createElement('div'); x.className = 'blk line'; x.style.left = pct(S.starts[i] + l.t0); x.style.width = `calc(${pct(l.t1 - l.t0)} - 1px)`; x.textContent = l.text; x.title = l.text; b.appendChild(x); });
+    (p.scene.beats || []).forEach((bt, k) => { const t = typeof bt.t === 'number' ? bt.t : (parseFloat(bt.t) || 0); const w = p.words; let tt = t; if (typeof bt.t === 'string') { const m = /^w(\d+)$/.exec(bt.t); if (m && w[+m[1]]) tt = w[+m[1]].t0; const l = /^l(\d+)$/.exec(bt.t); if (l && p.lines[+l[1]]) tt = p.lines[+l[1]].t0; if (/^end/.test(bt.t)) tt = p.dur - (parseFloat(bt.t.slice(4)) || 0); } const x = document.createElement('div'); x.className = 'blk beat'; x.style.left = pct(S.starts[i] + tt); x.style.top = '0'; x.title = JSON.stringify(bt); b.appendChild(x); });
+  });
+}
+// ---------- inspector ----------
+const opt = (obj, v) => Object.entries(Array.isArray(obj) ? Object.fromEntries(obj.map((k) => [k, k])) : obj).map(([k, d]) => `<option value="${k}" ${k === v ? 'selected' : ''}>${k}${d !== k ? ' — ' + String(d).slice(0, 38) : ''}</option>`).join('');
+function renderSide() {
+  const sc = S.project.scenes[S.sel], m = S.project.meta; if (!sc) return; const id = sc.id; const bgk = typeof sc.bg === 'string' ? sc.bg : sc.bg.kind;
+  const lines = (sc.lines || (sc.narration ? [{ text: sc.narration }] : [])).map((l) => (typeof l === 'string' ? { text: l } : l));
+  const el = $('#side');
+  el.innerHTML = `
+  <h4>Vídeo</h4>
+  <div class="f"><label>Formato</label><select data-m="format">${opt(cat.formats, m.format)}</select></div>
+  <div class="f"><label>Idioma</label><select data-m="lang">${opt(Object.keys(cat.voices), m.lang)}</select></div>
+  <div class="f"><label>Voz</label><select data-m="voice">${(cat.voices[m.lang] || []).map((v) => `<option value="${v.id}" ${v.id === (m.voice || cat.voices[m.lang][0].id) ? 'selected' : ''}>${v.id} — ${v.desc}</option>`).join('')}</select></div>
+  <div class="f"><label>Legendas</label><select data-m="cap"><option value="1" ${m.captions.enabled !== false ? 'selected' : ''}>ligadas</option><option value="0" ${m.captions.enabled === false ? 'selected' : ''}>desligadas</option></select></div>
+  <h4>Cena ${S.sel + 1} — ${id}</h4>
+  <div class="f"><label>Cenário</label><select data-s="bg">${opt(cat.backgrounds, bgk)}</select></div>
+  <div class="f"><label>Transição</label><select data-s="transition">${opt(cat.transitions, sc.transition || 'cut')}</select></div>
+  <div class="inl"><button class="sm" id="dup">duplicar</button><button class="sm" id="up">↑</button><button class="sm" id="down">↓</button><button class="sm" id="del">apagar</button><button class="sm" id="regen" title="Gera um preview mp4 em rascunho (só re-renderiza o que mudou)">▶ preview mp4</button></div>
+  <h4>Falas</h4>${lines.map((l, i) => `<div class="card"><div class="inl"><select data-l="${i}" data-k="who" style="width:90px">${['none', ...(sc.actors || []).map((a) => a.id)].map((a) => `<option ${a === (l.who === undefined ? sc.actors[0].id : l.who) ? 'selected' : ''}>${a}</option>`).join('')}</select><button class="sm" data-ld="${i}">✕</button></div><textarea data-l="${i}" data-k="text" style="min-height:48px;margin-top:5px">${l.text}</textarea></div>`).join('')}
+  <button class="sm" id="addLine">+ fala</button>
+  <h4>Personagens</h4>${(sc.actors || []).map((a) => `<div class="card"><div class="hd"><span>${a.id}</span></div>
+    <div class="f"><label>Modelo</label><select data-a="${a.id}" data-k="char">${opt(cat.characters, a.char || 'blue')}</select></div>
+    <div class="f"><label>Expressão</label><select data-a="${a.id}" data-k="face">${opt(cat.faces, a.face || 'neutral')}</select></div>
+    <div class="f"><label>Animação</label><select data-a="${a.id}" data-k="pose">${opt(cat.acts, a.pose || 'idle')}</select></div>
+    <div class="f"><label>Posição x</label><input type="range" min="0" max="1" step="0.01" value="${a.x ?? 0.5}" data-a="${a.id}" data-k="x"></div></div>`).join('')}
+  <h4>Objectos</h4>${(sc.props || []).map((p) => `<div class="card"><div class="hd"><span>${p.id}</span><button class="sm" data-pd="${p.id}">✕</button></div>
+    <div class="f"><label>Tipo</label><select data-p="${p.id}" data-k="kind">${opt(cat.props, p.kind)}</select></div>
+    <div class="f"><label>Aparece em</label><input data-p="${p.id}" data-k="at" value="${p.at ?? 0}" title="segundos, w5 (palavra), l1 (fala), @palavra"></div>
+    ${['text', 'screen', 'board', 'bubble'].includes(p.kind) ? `<div class="f"><label>Texto</label><input data-p="${p.id}" data-k="text" value="${(p.text || '').replace(/"/g, '&quot;')}"></div>` : ''}</div>`).join('')}
+  <button class="sm" id="addProp">+ objecto</button>
+  <h4>JSON da cena (avançado / para a IA)</h4><textarea id="sj" style="min-height:160px">${JSON.stringify(sc, null, 1).replace(/</g, '&lt;')}</textarea>
+  <div class="inl" style="margin-top:4px"><button class="sm" id="applyJson">aplicar JSON</button></div><div id="msg" class="err"></div>
+  <h4>Operações (API da IA)</h4><textarea id="opsTa" placeholder='[{"op":"swap_character","to":"hero"}]'></textarea>
+  <div class="inl" style="margin-top:4px"><button class="sm" id="runOps">executar ops</button></div>
+  <div id="vidBox"></div>`;
+  el.querySelectorAll('[data-m]').forEach((x) => x.onchange = () => { const k = x.dataset.m; if (k === 'cap') ops([{ op: 'set_meta', meta: { captions: { ...m.captions, enabled: x.value === '1' } } }]); else ops([{ op: 'set_meta', meta: { [k]: x.value, ...(k === 'lang' ? { voice: cat.voices[x.value][0].id } : {}) } }]); });
+  el.querySelectorAll('[data-s]').forEach((x) => x.onchange = () => ops([{ op: 'update_scene', id, set: { [x.dataset.s]: x.value } }]));
+  el.querySelectorAll('[data-a]').forEach((x) => { const ev = x.type === 'range' ? 'input' : 'change'; x.addEventListener(ev, () => ops([{ op: 'update_actor', scene: id, actor: x.dataset.a, set: { [x.dataset.k]: x.type === 'range' ? +x.value : x.value } }])); });
+  el.querySelectorAll('[data-p]').forEach((x) => x.onchange = () => { let v = x.value; if (x.dataset.k === 'at' && v !== '' && !isNaN(+v)) v = +v; ops([{ op: 'update_prop', scene: id, prop: x.dataset.p, set: { [x.dataset.k]: v } }]); });
+  el.querySelectorAll('[data-pd]').forEach((x) => x.onclick = () => ops([{ op: 'remove_prop', scene: id, prop: x.dataset.pd }]));
+  const setLines = (L) => ops([{ op: 'set_narration', id, lines: L }]);
+  el.querySelectorAll('[data-l]').forEach((x) => x.onchange = () => { const L = lines.map((l) => ({ ...l })); L[+x.dataset.l][x.dataset.k] = x.value; setLines(L); });
+  el.querySelectorAll('[data-ld]').forEach((x) => x.onclick = () => setLines(lines.filter((_, i) => i !== +x.dataset.ld)));
+  $('#addLine').onclick = () => setLines([...lines, { text: 'Nova fala.', who: sc.actors[0].id }]);
+  $('#addProp').onclick = () => ops([{ op: 'add_prop', scene: id, prop: { id: 'p' + Date.now() % 100000, kind: 'star', x: 0.5, y: 0.3, at: 0.5, fx: 'pop' } }]);
+  $('#dup').onclick = () => ops([{ op: 'duplicate_scene', id }]); $('#del').onclick = () => S.project.scenes.length > 1 && ops([{ op: 'remove_scene', id }]);
+  $('#up').onclick = () => S.sel > 0 && (S.sel--, ops([{ op: 'move_scene', id, to: S.sel }])); $('#down').onclick = () => S.sel < S.project.scenes.length - 1 && (S.sel++, ops([{ op: 'move_scene', id, to: S.sel }]));
+  $('#applyJson').onclick = () => { try { const o = JSON.parse($('#sj').value); const p = JSON.parse(JSON.stringify(S.project)); p.scenes[S.sel] = o; const n = normalizeProject(p); if (n.errors.length) return ($('#msg').textContent = n.errors.join('\n')); setProject(p); } catch (e) { $('#msg').textContent = e.message; } };
+  $('#runOps').onclick = () => { try { ops(JSON.parse($('#opsTa').value)); } catch (e) { $('#msg').textContent = e.message; } };
+  $('#regen').onclick = () => render('draft', [id]);
+}
+// ---------- player ----------
+function stopAudio() { S.audios.forEach((a) => a.pause()); }
+let last = 0, prevT = 0;
+function tick(now) { if (!S.playing) return; const dt = (now - last) / 1000; last = now; prevT = S.t; S.t += dt; if (S.t >= S.total) { S.t = 0; prevT = -1; stopAudio(); }
+  S.plans.forEach((p, i) => p.lines.forEach((l, k) => { const g = S.starts[i] + l.t0; if (g > prevT && g <= S.t) { const v = voiceFor(p.scene); if (v && v.urls[k]) { const a = new Audio(v.urls[k]); S.audios.push(a); a.play().catch(() => {}); } } }));
+  draw(); requestAnimationFrame(tick); }
+$('#bPlay').onclick = () => { S.playing = !S.playing; $('#bPlay').textContent = S.playing ? '⏸' : '▶'; if (S.playing) { last = performance.now(); prevT = S.t; requestAnimationFrame(tick); } else stopAudio(); };
+$('#seek').oninput = (e) => { S.t = (+e.target.value / 1000) * S.total; stopAudio(); const [i] = locate(S.t); if (i !== S.sel) { S.sel = i; renderScenes(); renderSide(); } draw(); };
+$('#tl').onclick = (e) => { const r = $('#tl').getBoundingClientRect(); S.t = Math.max(0, Math.min(1, (e.clientX - r.left - 6) / (r.width - 12))) * S.total; draw(); };
+// ---------- voz & render ----------
+$('#bVoice').onclick = async () => {
+  status('a gerar voz…'); const t0 = performance.now(); const r = await fetch('/api/voice', { method: 'POST', body: JSON.stringify({ project: S.project }) }); const j = await r.json(); if (j.errors) return status(j.errors.join('; '), true);
+  for (const sc of S.project.scenes) { const v = j[sc.id]; if (v) S.voice[sc.id] = { key: JSON.stringify(sc.lines || sc.narration || ''), lineDurs: v.map((x) => x.dur), envs: v.map((x) => Float32Array.from(x.env)), urls: v.map((x) => x.url) }; }
+  recompile(); renderScenes(); draw(); status(`voz sincronizada (${((performance.now() - t0) / 1000).toFixed(1)}s) — carrega ▶ para ouvir`);
+};
+async function render(q, only) {
+  status('a renderizar…'); const r = await (await fetch('/api/render', { method: 'POST', body: JSON.stringify({ project: S.project, quality: q || $('#qual').value }) })).json(); const t0 = performance.now();
+  const poll = async () => { const j = await (await fetch('/api/job/' + r.job)).json(); if (j.status === 'running') { status(`a renderizar… ${j.progress.stage || ''} ${((performance.now() - t0) / 1000).toFixed(0)}s`); return setTimeout(poll, 500); }
+    if (j.status === 'error') return status(j.error, true); const T = j.result.timings; status(`pronto em ${(T.total / 1000).toFixed(1)}s · vídeo ${j.result.duration.toFixed(1)}s · ${j.result.scenes.filter((s) => s.cached).length}/${j.result.scenes.length} cenas em cache`);
+    $('#vidBox').innerHTML = `<video controls src="${j.url}?t=${Date.now()}"></video>`; $('#vidBox').scrollIntoView(); };
+  poll();
+}
+$('#bRender').onclick = () => render();
+// ---------- sincronização com a IA (polling de versão) ----------
+async function pull(first) { try { const j = await (await fetch('/api/project')).json(); if (j.version !== S.version) { const mine = S.version; S.version = j.version; setProject(j.project, true); if (!first && mine) status('actualizado pela IA (v' + j.version + ')'); } } catch {} }
+await pull(true); draw();
+setInterval(pull, 1000);
+window.addEventListener('resize', draw);
+window.__sf = S; // debug
+</script>
+</body>
+</html>
