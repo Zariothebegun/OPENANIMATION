@@ -99,7 +99,8 @@ Exemplos:
 
 ## Ensinar temas novos (liberdade criativa)
 
-- **Estilos** (`meta.style`): `painted` (por defeito; pintado, sombreado, vinheta+grão, legendas minúsculas de 1–2 palavras) ou `flat` (plano, legendas pop em maiúsculas).
+- **Estilos** (`meta.style`): `painted` ou `flat` (originais), `a3_prehistoric_cave` / `A3` e `b5_avatar_explainer` / `B5`. A3 usa cavernas, fogueiras, vales e rios desenhados em vetor; B5 usa papel texturado, um avatar apresentador animado e legendas em preto/vermelho. A3 e B5 são sempre 2D/code-only: o motor substitui fundos 3D/imagem por cenários vetoriais locais e não chama geradores de imagem.
+- Para o estilo A3, usa fundos `prehistoric_cave`, `prehistoric_campfire`, `prehistoric_outdoors` e `prehistoric_river`. Para B5, usa `warm_paper` e `explainer_board` (ou `grid`, `room`, `office`, `classroom`). O catálogo/API publica `styleCards` com nome, código, guia de realização, miniatura vetorial e requisitos para os cartões de seleção da app. A adaptação 2D acontece numa cópia temporária durante validação/render; o projeto guardado e os estilos antigos permanecem intactos.
 - **Cenários**: usa uma predefinição (`launch_night`, `desert_dusk`, `highway`, `garage`, `blueprint`, `sky_day`, `space_dark`, `lab_dark`) ou compõe um com `{"kind":"scenic","sky":[[0,"#..."],[1,"#..."]],"ground":0.66,"groundColor":"#...","layers":[{"t":"stars"},{"t":"sun",...},{"t":"mountains",...},{"t":"city"}],"front":[{"t":"road"}]}`. Camadas: stars, glow, sun, moon, clouds, mountains, hills, dunes, city, rect, haze, grid, road, lights, stripes, floorgrid, blueprint.
 - **Diagramas à medida**: prop `shape` com `paths` (rect, circle, ellipse, poly, line com `arrow`, curve, arc, text) em coordenadas −0.5..0.5, cada uma com `at` (aparece) e `draw:true` (traço animado). É assim que desenhas qualquer esquema que o catálogo não tenha.
 - **Parâmetros de props** vão no próprio objecto ou em `"p":{...}`.

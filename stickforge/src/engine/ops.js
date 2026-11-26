@@ -4,7 +4,7 @@ const clone = (x) => JSON.parse(JSON.stringify(x));
 const merge = (t, s) => { for (const [k, v] of Object.entries(s)) { if (v === null) delete t[k]; else t[k] = v; } return t; };
 
 export const OPS_HELP = {
-  set_meta: '{op, meta:{format,fps,animFps,lang,voice,speed,captions:{...},transition}}',
+  set_meta: '{op, meta:{format,style,fps,animFps,lang,voice,speed,captions:{...},transition}}',
   add_scene: '{op, scene:{...}, after?:sceneId|index}',
   remove_scene: '{op, id}', duplicate_scene: '{op, id}', move_scene: '{op, id, to:index}',
   update_scene: '{op, id, set:{bg,transition,camera,title,minDur,...}} (null apaga um campo)',

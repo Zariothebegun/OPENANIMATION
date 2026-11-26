@@ -13,9 +13,12 @@ import { KITS } from '../set3d/kits.js';
 import { SHOT_NAMES } from './scene.js';
 import { FORMATS } from './scene.js';
 import { KIT_MAP } from '../cinema/bank.js';
+import { STYLE_CATALOG } from './style.js';
 
 export function getCatalog() {
   return {
+    styles: Object.fromEntries(Object.entries(STYLE_CATALOG).map(([id, s]) => [id, `${s.code} — ${s.name}: ${s.description}`])),
+    styleCards: STYLE_CATALOG,
     formats: Object.keys(FORMATS),
     characters: Object.fromEntries(Object.entries(CHARACTERS).map(([k, v]) => [k, v.desc])),
     faces: Object.fromEntries(Object.entries(FACES).map(([k, v]) => [k, v.desc])),

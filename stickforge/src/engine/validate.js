@@ -1,6 +1,7 @@
 // Validação com mensagens pensadas para uma IA corrigir sozinha ("quis dizer X?" + lista de válidos).
 import { getCatalog } from './catalog.js';
 import { FORMATS } from './scene.js';
+import { STYLE_CATALOG, canonicalStyleId, styleOf, styleBackground } from './style.js';
 
 function lev(a, b) { const m = a.length, n = b.length; const d = Array.from({ length: m + 1 }, (_, i) => [i, ...Array(n).fill(0)]); for (let j = 0; j <= n; j++) d[0][j] = j; for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); return d[m][n]; }
 const suggest = (v, list) => { let best = null, bd = 99; for (const x of list) { const dd = lev(String(v).toLowerCase(), x); if (dd < bd) { bd = dd; best = x; } } return bd <= Math.max(2, Math.floor(String(v).length / 3)) ? best : null; };
@@ -12,6 +13,19 @@ export function normalizeProject(raw) {
   const p = JSON.parse(JSON.stringify(raw || {}));
   p.meta = { ...DEFAULT_META, ...(p.meta || {}) };
   p.meta.captions = { ...DEFAULT_META.captions, ...(p.meta.captions || {}) };
+  if (p.meta.style !== undefined) {
+    const styleId = canonicalStyleId(p.meta.style);
+    if (!styleId) errors.push(`meta.style: "${p.meta.style}" inválido. Válidos: ${Object.keys(STYLE_CATALOG).join(', ')}, A3, B5`);
+    else p.meta.style = styleId;
+  }
+  const selectedStyle = styleOf(p.meta), selectedStyleId = p.meta.style || 'painted';
+  if (selectedStyle.codeOnly) {
+    if (p.meta.engine === 'cinema') warnings.push(`meta.style "${selectedStyle.code}" usa apenas o renderizador 2D de código; o motor trocará Cinema/3D apenas durante o render.`);
+    if (Array.isArray(p.scenes)) for (const s of p.scenes) {
+      const after = styleBackground(s.bg, selectedStyleId);
+      if (JSON.stringify(s.bg) !== JSON.stringify(after)) warnings.push(`cena "${s.id || ''}": o render usará o fundo vetorial "${after}" no estilo ${selectedStyle.code}; a configuração original será preservada.`);
+    }
+  }
   if (!FORMATS[p.meta.format]) errors.push(`meta.format: "${p.meta.format}" inválido. Válidos: ${Object.keys(FORMATS).join(', ')}`);
   if (![30, 15, 10, 6, 5, 3, 2, 1].includes(p.meta.animFps) && 30 % p.meta.animFps !== 0) errors.push(`meta.animFps deve dividir 30 (30, 15, 10, 6...). Recebido ${p.meta.animFps}`);
   if (!Array.isArray(p.scenes) || !p.scenes.length) { errors.push('scenes: precisa de pelo menos 1 cena'); p.scenes = []; }
@@ -21,8 +35,10 @@ export function normalizeProject(raw) {
     const sp = `scenes[${i}]`;
     if (!s.id) s.id = 's' + (i + 1);
     if (ids.has(s.id)) errors.push(`${sp}.id: "${s.id}" duplicado`); ids.add(s.id);
-    const bgk = typeof s.bg === 'string' ? s.bg : s.bg?.kind; if (s.bg !== undefined) chk(sp + '.bg', 'bg', bgk, Object.keys(cat.backgrounds), 'cenário');
-    if (!s.bg) s.bg = 'studio';
+    const effectiveBg = selectedStyle.codeOnly ? styleBackground(s.bg, selectedStyleId) : (s.bg || 'studio');
+    const bgk = typeof effectiveBg === 'string' ? effectiveBg : effectiveBg?.kind;
+    if (s.bg !== undefined || selectedStyle.codeOnly) chk(sp + '.bg', 'bg', bgk, Object.keys(cat.backgrounds), 'cenário');
+    if (!s.bg && !selectedStyle.codeOnly) s.bg = 'studio';
     const is3 = bgk === 'set3d';
     if (is3) {
       const validKits = p.meta.engine === 'cinema' ? Object.keys(cat.cinemaKits) : cat.kits3d;
@@ -61,8 +77,8 @@ export function normalizeProject(raw) {
     if (is3 && s.actors.length > 1 && !s.shot && !s.cam3) warnings.push(`${sp}: sem "shot"; vai usar um plano automático. Escolhe um (${cat.shots.join(', ')}) para variar a câmara entre cenas`);
     if (!(s.lines && s.lines.length) && !s.narration && !s.dur) warnings.push(`${sp}: sem narração nem "dur" — a cena terá 2s sem voz`);
   });
-  p.scenes.forEach((s, i) => { const q = p.scenes[i - 1]; if (!q || s.bg?.kind !== 'set3d' || q.bg?.kind !== 'set3d') return; const same = (s.actors || []).every((a) => { const b = (q.actors || []).find((x) => x.id === a.id); return b && b.x === a.x && b.z === a.z; }); if (same && (s.shot || '') === (q.shot || '')) warnings.push(`scenes[${i}]: mesmas posições e mesmo plano da cena anterior — muda x/z, "from" e "shot" para não repetir o enquadramento`); });
-  if (p.meta.engine === 'cinema') {
+  p.scenes.forEach((s, i) => { const q = p.scenes[i - 1]; if (selectedStyle.codeOnly || !q || s.bg?.kind !== 'set3d' || q.bg?.kind !== 'set3d') return; const same = (s.actors || []).every((a) => { const b = (q.actors || []).find((x) => x.id === a.id); return b && a.x === b.x && a.z === b.z; }); if (same && (s.shot || '') === (q.shot || '')) warnings.push(`scenes[${i}]: mesmas posições e mesmo plano da cena anterior — muda x/z, "from" e "shot" para não repetir o enquadramento`); });
+  if (p.meta.engine === 'cinema' && !selectedStyle.codeOnly) {
     const baseKit = (s) => {
       const bg = typeof s.bg === 'object' ? s.bg : { kit: s.bg };
       return cat.cinemaKits[bg.kit]?.split(' · ')[0] || bg.kit || 'street';

@@ -64,6 +64,7 @@ export function drawCharacter(ctx, ch, pose, o) {
   const limb = (a, b, c, w, col = INK) => {
     ctx.strokeStyle = col; ctx.lineWidth = w;
     ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); if (c) ctx.lineTo(c[0], c[1]); ctx.stroke();
+    if (st.rough) { ctx.save(); ctx.globalAlpha *= 0.2; ctx.lineWidth = Math.max(1, w * 0.22); ctx.beginPath(); ctx.moveTo(a[0] + lw * 0.18, a[1] - lw * 0.12); ctx.lineTo(b[0] + lw * 0.12, b[1] + lw * 0.16); if (c) ctx.lineTo(c[0] - lw * 0.14, c[1] + lw * 0.1); ctx.stroke(); ctx.restore(); }
   };
   const hand = (p) => {
     if (st.thinArms) { ctx.fillStyle = INK; ctx.beginPath(); ctx.arc(p[0], p[1], lw * (st.handR || 1.35), 0, Math.PI * 2); ctx.fill(); return; }
@@ -131,6 +132,15 @@ function drawTorso(ctx, ch, pelvis, shoulder, S, lw, st = {}) {
   if (kind === 'suit_v') {
     ctx.fillStyle = '#f4f0ea'; ctx.strokeStyle = INK; ctx.lineWidth = lw * 0.6;
     ctx.beginPath(); ctx.moveTo(shoulder[0] - 0.05 * S, shoulder[1] - 0.01 * S); ctx.lineTo(shoulder[0] + 0.05 * S, shoulder[1] - 0.01 * S); ctx.lineTo(shoulder[0], shoulder[1] + 0.12 * S); ctx.closePath(); ctx.fill(); ctx.stroke();
+  } else if (kind === 'cave_fur') {
+    ctx.fillStyle = body; ctx.strokeStyle = INK; ctx.lineWidth = lw * 0.95;
+    ctx.beginPath(); ctx.moveTo(shoulder[0] - w * 0.62, shoulder[1] + 0.025 * S); ctx.lineTo(pelvis[0] - w * 0.6, pelvis[1] - 0.025 * S);
+    ctx.lineTo(pelvis[0] - w * 0.68, pelvis[1] + 0.055 * S); ctx.lineTo(pelvis[0] - w * 0.36, pelvis[1] + 0.035 * S);
+    ctx.lineTo(pelvis[0] - w * 0.08, pelvis[1] + 0.07 * S); ctx.lineTo(pelvis[0] + w * 0.18, pelvis[1] + 0.03 * S);
+    ctx.lineTo(pelvis[0] + w * 0.47, pelvis[1] + 0.065 * S); ctx.lineTo(pelvis[0] + w * 0.68, pelvis[1] + 0.025 * S);
+    ctx.lineTo(pelvis[0] + w * 0.58, pelvis[1] - 0.025 * S); ctx.lineTo(shoulder[0] + w * 0.62, shoulder[1] + 0.025 * S);
+    ctx.quadraticCurveTo(shoulder[0], shoulder[1] - 0.045 * S, shoulder[0] - w * 0.62, shoulder[1] + 0.025 * S); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,232,190,.42)'; ctx.lineWidth = Math.max(1.5, lw * 0.48); ctx.beginPath(); ctx.moveTo(mid[0] - w * .3, mid[1]); ctx.lineTo(mid[0] + w * .28, mid[1] + .02 * S); ctx.stroke();
   } else if (kind === 'vest') {
     for (let i = -2; i <= 2; i++) { ctx.strokeStyle = i % 2 ? (ch.stripeA || '#d9803a') : (ch.stripeB || '#2f5f86'); ctx.lineWidth = w * 0.17; ctx.beginPath(); ctx.moveTo(pelvis[0] + i * w * 0.2, pelvis[1] - 0.02 * S); ctx.lineTo(shoulder[0] + i * w * 0.2, shoulder[1] + 0.02 * S); ctx.stroke(); }
   } else if (kind === 'suit') {

@@ -115,6 +115,68 @@ def('studio', 'fundo liso de estúdio (color) com vinheta', (ctx, W, H, o) => {
   ctx.fillStyle = shade(c, -0.1); ctx.fillRect(0, gy, W, H - gy); ctx.fillStyle = 'rgba(0,0,0,.08)'; ctx.fillRect(0, gy, W, H * 0.008);
   return 0.7;
 });
+function caveSet(ctx, W, H, camp = false) {
+  const gy = H * 0.72, r = rng(camp ? 318 : 303);
+  ctx.fillStyle = vgrad(ctx, H, [[0, '#4b3021'], [0.48, '#855536'], [1, '#3d281e']]); ctx.fillRect(0, 0, W, H);
+  // The cave mouth is a hand-built vector arch; the set is cached once per scene.
+  ctx.beginPath(); ctx.moveTo(W * 0.08, gy); ctx.bezierCurveTo(W * 0.12, H * 0.3, W * 0.22, H * 0.08, W * 0.5, H * 0.12); ctx.bezierCurveTo(W * 0.79, H * 0.1, W * 0.91, H * 0.34, W * 0.94, gy); ctx.closePath();
+  ctx.fillStyle = vgrad(ctx, gy, [[0, '#f3b65e'], [0.48, '#d98b45'], [1, '#62735d']]); ctx.fill();
+  ctx.save(); ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(W * 0.2, 0); ctx.quadraticCurveTo(W * 0.34, H * 0.16, W * 0.39, H * 0.42); ctx.quadraticCurveTo(W * 0.46, H * 0.61, W * 0.38, gy); ctx.lineTo(W * 0.06, gy); ctx.closePath(); ctx.clip();
+  ctx.fillStyle = '#a66f43'; ctx.fillRect(0, 0, W * 0.42, gy); ctx.restore();
+  ctx.save(); ctx.beginPath(); ctx.moveTo(W, 0); ctx.lineTo(W * 0.83, 0); ctx.quadraticCurveTo(W * 0.68, H * 0.17, W * 0.65, H * 0.42); ctx.quadraticCurveTo(W * 0.57, H * 0.6, W * 0.64, gy); ctx.lineTo(W * 0.96, gy); ctx.closePath(); ctx.clip();
+  ctx.fillStyle = '#65412d'; ctx.fillRect(W * 0.62, 0, W * 0.4, gy); ctx.restore();
+  ctx.fillStyle = vgrad(ctx, H, [[0.69, '#987047'], [1, '#60412b']]); ctx.fillRect(0, gy, W, H - gy);
+  line(ctx, W * 0.007);
+  // Uneven stone seams and hanging rock teeth form the cave silhouette.
+  for (let i = 0; i < 8; i++) {
+    const x = W * (0.025 + i * 0.135), top = (i % 2 ? H * 0.13 : H * 0.04), tip = top + H * (0.12 + r() * 0.11), ww = W * (0.07 + r() * 0.035);
+    ctx.fillStyle = i % 2 ? '#5d3b28' : '#70472e'; ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x + ww, 0); ctx.lineTo(x + ww * 0.56, tip); ctx.lineTo(x + ww * 0.27, top + H * 0.04); ctx.closePath(); ctx.fill(); ctx.stroke();
+  }
+  ctx.strokeStyle = 'rgba(45,29,20,.58)'; ctx.lineWidth = W * 0.006;
+  for (let i = 0; i < 13; i++) { const x = r() * W, y = H * (0.18 + r() * 0.5); ctx.beginPath(); ctx.moveTo(x, y); ctx.quadraticCurveTo(x + W * (r() - .5) * .08, y + H * .018, x + W * (r() - .5) * .13, y + H * .035); ctx.stroke(); }
+  if (camp) {
+    const x = W * 0.5, y = gy + H * 0.02;
+    ctx.fillStyle = '#443025'; for (let i = 0; i < 7; i++) { const a = i * Math.PI * 2 / 7; ctx.beginPath(); ctx.ellipse(x + Math.cos(a) * W * .065, y + Math.sin(a) * H * .018, W * .025, H * .015, a, 0, Math.PI * 2); ctx.fill(); }
+    const glow = ctx.createRadialGradient(x, y, 0, x, y, W * .24); glow.addColorStop(0, 'rgba(255,158,45,.58)'); glow.addColorStop(1, 'rgba(255,115,20,0)'); ctx.fillStyle = glow; ctx.fillRect(x - W * .25, y - W * .25, W * .5, W * .5);
+    ctx.fillStyle = '#f5b43d'; ctx.beginPath(); ctx.moveTo(x, y); ctx.quadraticCurveTo(x - W * .065, y - H * .045, x - W * .008, y - H * .095); ctx.quadraticCurveTo(x + W * .006, y - H * .055, x + W * .035, y - H * .072); ctx.quadraticCurveTo(x + W * .07, y - H * .034, x, y); ctx.fill();
+    ctx.fillStyle = '#e65d2f'; ctx.beginPath(); ctx.moveTo(x, y); ctx.quadraticCurveTo(x - W * .03, y - H * .032, x + W * .008, y - H * .06); ctx.quadraticCurveTo(x + W * .04, y - H * .025, x, y); ctx.fill();
+  }
+  return 0.72;
+}
+def('prehistoric_cave', 'caverna de pedra e barro com entrada iluminada, desenhada em vetor', (ctx, W, H) => caveSet(ctx, W, H, false));
+def('prehistoric_campfire', 'acampamento pré-histórico com fogueira e luz quente, desenhado em vetor', (ctx, W, H) => caveSet(ctx, W, H, true));
+def('prehistoric_outdoors', 'vale pré-histórico ao amanhecer com colinas, pedras e árvores primitivas', (ctx, W, H, o) => {
+  const gy = H * .68, r = rng(o.seed || 71); ctx.fillStyle = vgrad(ctx, gy, [[0, '#f4b46c'], [1, '#f6d99d']]); ctx.fillRect(0, 0, W, gy);
+  ctx.fillStyle = '#d77847'; ctx.beginPath(); ctx.arc(W * .78, H * .17, W * .075, 0, Math.PI * 2); ctx.fill();
+  for (let i = 0; i < 7; i++) { const x = -W * .1 + i * W * .2, h = H * (.17 + r() * .15); ctx.fillStyle = i % 2 ? '#9c704b' : '#b17a4c'; ctx.beginPath(); ctx.moveTo(x - W * .17, gy); ctx.lineTo(x, gy - h); ctx.lineTo(x + W * .21, gy); ctx.closePath(); ctx.fill(); }
+  ctx.fillStyle = '#7d693f'; ctx.fillRect(0, gy, W, H - gy); ctx.fillStyle = '#9c8048'; ctx.beginPath(); ctx.moveTo(W * .42, gy); ctx.lineTo(W * .58, gy); ctx.lineTo(W * .88, H); ctx.lineTo(W * .12, H); ctx.closePath(); ctx.fill();
+  line(ctx, W * .006); for (let i = 0; i < 4; i++) { const x = W * (.12 + i * .24), y = gy - H * (.08 + (i % 2) * .04); ctx.strokeStyle = '#59402c'; ctx.lineWidth = W * .018; ctx.beginPath(); ctx.moveTo(x, y + H * .12); ctx.lineTo(x, y); ctx.moveTo(x, y + H * .035); ctx.lineTo(x - W * .04, y - H * .025); ctx.moveTo(x, y + H * .05); ctx.lineTo(x + W * .045, y - H * .02); ctx.stroke(); ctx.fillStyle = '#54613a'; ctx.beginPath(); ctx.arc(x - W * .04, y - H * .025, W * .036, 0, 7); ctx.arc(x + W * .045, y - H * .02, W * .04, 0, 7); ctx.fill(); }
+  for (let i = 0; i < 18; i++) { const x = r() * W, y = gy + H * .05 + r() * H * .27; ctx.fillStyle = i % 3 ? '#c9a36a' : '#756149'; ctx.beginPath(); ctx.ellipse(x, y, W * (.009 + r() * .013), H * (.004 + r() * .006), r(), 0, 7); ctx.fill(); }
+  return .68;
+});
+def('prehistoric_river', 'rio pré-histórico entre margens rochosas, desenhado em vetor', (ctx, W, H) => {
+  const gy = H * .58; ctx.fillStyle = vgrad(ctx, gy, [[0, '#eeb36e'], [1, '#f4d69c']]); ctx.fillRect(0, 0, W, gy);
+  ctx.fillStyle = '#8a6041'; ctx.beginPath(); ctx.moveTo(0, gy * .66); ctx.lineTo(W * .31, gy * .72); ctx.lineTo(W * .44, H); ctx.lineTo(0, H); ctx.fill(); ctx.beginPath(); ctx.moveTo(W, gy * .65); ctx.lineTo(W * .68, gy * .7); ctx.lineTo(W * .55, H); ctx.lineTo(W, H); ctx.fill();
+  ctx.fillStyle = '#4d93a0'; ctx.beginPath(); ctx.moveTo(W * .38, gy); ctx.bezierCurveTo(W * .57, H * .67, W * .29, H * .82, W * .49, H); ctx.lineTo(W * .57, H); ctx.bezierCurveTo(W * .4, H * .83, W * .71, H * .66, W * .53, gy); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = 'rgba(244,228,181,.78)'; ctx.lineWidth = W * .009; for (let i = 0; i < 7; i++) { const y = gy + H * (.035 + i * .05); ctx.beginPath(); ctx.moveTo(W * (.4 + (i % 2) * .1), y); ctx.quadraticCurveTo(W * .5, y - H * .015, W * (.58 - (i % 2) * .1), y + H * .004); ctx.stroke(); }
+  line(ctx, W * .006); for (let i = 0; i < 7; i++) { const x = W * (.04 + i * .15), y = gy + H * (.02 + (i % 3) * .07); ctx.fillStyle = i % 2 ? '#c6a36d' : '#6d5943'; ctx.beginPath(); ctx.ellipse(x, y, W * .036, H * .018, -.12, 0, 7); ctx.fill(); ctx.stroke(); }
+  return .68;
+});
+def('warm_paper', 'papel marfim quente com fibras e margens leves, desenhado em vetor', (ctx, W, H) => {
+  ctx.fillStyle = '#f4ecd9'; ctx.fillRect(0, 0, W, H); ctx.fillStyle = 'rgba(255,255,255,.25)'; ctx.fillRect(W * .045, H * .035, W * .91, H * .93);
+  ctx.strokeStyle = 'rgba(83,63,43,.18)'; ctx.lineWidth = Math.max(2, W * .003); ctx.strokeRect(W * .055, H * .045, W * .89, H * .91);
+  ctx.fillStyle = 'rgba(172,58,49,.52)'; ctx.fillRect(W * .08, H * .08, W * .035, H * .01); ctx.fillRect(W * .08, H * .08, W * .01, H * .035);
+  return .78;
+});
+def('explainer_board', 'quadro de papel com títulos, setas e formas de diagrama desenhados em vetor', (ctx, W, H) => {
+  ctx.fillStyle = '#f4ecd9'; ctx.fillRect(0, 0, W, H); ctx.fillStyle = '#fffaf0'; roundRect(ctx, W * .08, H * .1, W * .84, H * .66, W * .025); ctx.fill(); line(ctx, W * .005); ctx.stroke();
+  ctx.fillStyle = '#bd3732'; roundRect(ctx, W * .13, H * .16, W * .3, H * .034, W * .012); ctx.fill();
+  ctx.strokeStyle = '#39322b'; ctx.lineWidth = W * .006; ctx.beginPath(); ctx.arc(W * .34, H * .44, W * .082, 0, 7); ctx.stroke(); ctx.beginPath(); ctx.moveTo(W * .44, H * .44); ctx.lineTo(W * .59, H * .44); ctx.lineTo(W * .55, H * .41); ctx.moveTo(W * .59, H * .44); ctx.lineTo(W * .55, H * .47); ctx.stroke();
+  ctx.fillStyle = '#d9c7a7'; roundRect(ctx, W * .63, H * .34, W * .19, H * .2, W * .018); ctx.fill();
+  ctx.fillStyle = '#bd3732'; ctx.beginPath(); ctx.arc(W * .34, H * .44, W * .023, 0, 7); ctx.fill();
+  ctx.fillStyle = '#756752'; ctx.fillRect(W * .23, H * .68, W * .54, H * .012); ctx.fillRect(W * .31, H * .715, W * .38, H * .009);
+  return .78;
+});
 def('grid', 'folha quadriculada (matemática/explicação)', (ctx, W, H, o) => {
   ctx.fillStyle = '#fffdf5'; ctx.fillRect(0, 0, W, H); ctx.strokeStyle = 'rgba(70,130,200,.28)'; ctx.lineWidth = 2; const st = W / 14; for (let x = 0; x <= W; x += st) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); } for (let y = 0; y <= H; y += st) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
   ctx.strokeStyle = 'rgba(220,80,80,.5)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(W * 0.08, 0); ctx.lineTo(W * 0.08, H); ctx.stroke();

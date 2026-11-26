@@ -1,5 +1,5 @@
 // Compilador de cena (DSL -> plano temporal) + desenho de frame. Puro: corre em Node (skia-canvas) e no browser.
-import { clamp, ease, lerp, hashStr, INK, track } from './util.js';
+import { clamp, ease, lerp, hashStr, INK, track, roundRect } from './util.js';
 import { drawCharacter } from './rig.js';
 import { evalClip, lerpPose, CLIPS } from './poses.js';
 import { faceDef } from './faces.js';
@@ -14,7 +14,7 @@ import './props3.js';
 import './bg2.js';
 import { seqBg, KIT_BOUNDS } from './bg3d.js';
 import { drawParticles, applyRim, applyGrade, bloom, rimEdge, drawLights } from './fx.js';
-import { applyStyle, styleOf, styleName, finishBackground, CAPTION_PRESETS } from './style.js';
+import { applyStyle, styleOf, styleName, styleBackground, finishBackground, CAPTION_PRESETS } from './style.js';
 
 export const ENV_HZ = 60;
 export const FORMATS = { '9:16': [1080, 1920], '16:9': [1920, 1080], '1:1': [1080, 1080], '4:5': [1080, 1350] };
@@ -119,7 +119,10 @@ function defaultCam(sc, dur, lines = [], beats = []) {
   return { keys, shake: sc.shake ?? 0.22 };
 }
 export function compileScene(scene, meta = {}, timing = {}) {
-  const sc = scene;
+  const selectedStyle = styleOf(meta);
+  const bg = selectedStyle.codeOnly ? styleBackground(scene.bg, styleName(meta)) : (scene.bg || 'studio');
+  // Style adaptation is local to this compiled plan; the saved project stays intact.
+  const sc = { ...scene, bg };
   const actorsIn = sc.actors && sc.actors.length ? sc.actors : [{ id: 'a', char: 'blue' }];
   const defaultWho = actorsIn[0].id;
   let linesIn = sc.lines || (sc.narration ? [{ text: sc.narration }] : []);
@@ -146,8 +149,11 @@ export function compileScene(scene, meta = {}, timing = {}) {
   const actors = actorsIn.map((a, i) => {
     const n = actorsIn.length;
     const dx = STAGE ? (n === 1 ? 0 : (i - (n - 1) / 2) * 1.5) : n === 1 ? 0.5 : n === 2 ? [0.3, 0.7][i] : n === 3 ? [0.2, 0.5, 0.8][i] : (i + 0.5) / n;
+    const id = a.id || 'a' + i, baseDef = resolveCharacter(a), stl = styleOf(meta);
+    const fur = ['#9a623b', '#a97849', '#7f5536', '#b68450'][hashStr(id) % 4];
+    const def = stl.cave ? { ...baseDef, outfit: fur, outfitType: 'cave_fur', hat: undefined, hair: 'long', hairColor: '#38251b', acc: [], skin: ['#e5c39a', '#d4a77c', '#edcfaa'][hashStr(id + 'skin') % 3] } : baseDef;
     return {
-      id: a.id || 'a' + i, def: resolveCharacter(a), scale: a.scale ?? 1, x0: a.x ?? dx, y0: a.y, flip0: a.flip ?? (n === 2 ? i === 1 : false),
+      id, def, scale: a.scale ?? 1, x0: a.x ?? dx, y0: a.y, flip0: a.flip ?? (n === 2 ? i === 1 : false),
       face0: a.face || 'neutral', pose0: a.pose || 'idle', at: tspec(a.at, 0), until: a.until !== undefined ? tspec(a.until, Infinity) : Infinity,
       xs: [], ys: [], zs: [], z0: a.z ?? 0, from: a.from, toward: a.toward, flips: [], faces: [{ t: 0, v: a.face || 'neutral' }], acts: [{ t0: 0, name: a.pose || 'idle', p: {} }], z: 0, stage: STAGE,
     };
@@ -318,6 +324,26 @@ function drawPropAt(ctx, pr, t, W, H, host, x, y, held) {
   ctx.restore();
 }
 
+function drawAvatarPresenter(ctx, W, H, plan, t, stl) {
+  const cfg = plan.meta.presenter === false ? null : (typeof plan.meta.presenter === 'object' ? plan.meta.presenter : {});
+  if (!cfg) return;
+  const m = Math.min(W, H), x = W * 0.735, y = H * 0.035, w = W * 0.235, h = H * 0.205;
+  ctx.save(); ctx.shadowColor = 'rgba(35,25,18,.2)'; ctx.shadowBlur = m * .012; ctx.shadowOffsetY = m * .004;
+  roundRect(ctx, x, y, w, h, m * .022); ctx.fillStyle = '#f8efde'; ctx.fill(); ctx.lineWidth = Math.max(2, m * .004); ctx.strokeStyle = '#29231f'; ctx.stroke(); ctx.restore();
+  ctx.save(); roundRect(ctx, x + m * .009, y + m * .009, m * .014, h - m * .018, m * .006); ctx.fillStyle = cfg.accent || '#c83532'; ctx.fill();
+  ctx.fillStyle = '#29231f'; ctx.font = `800 ${Math.max(11, m * .023)}px Inter, sans-serif`; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(cfg.label || 'APRESENTADOR', x + m * .03, y + m * .026); ctx.restore();
+  const def = resolveCharacter({ char: cfg.char || 'host', outfit: cfg.outfit || '#a83b36', outfitType: cfg.outfitType || 'suit', hair: cfg.hair, hairColor: cfg.hairColor });
+  const line = plan.lines.find((l) => t >= l.t0 && t <= l.t1), mouth = line ? clamp(envAt(line, t) * 1.25, 0, 1) : 0;
+  const S = Math.min(m * .3, H * .165), ax = x + w * .52, ay = y + h - m * .008;
+  drawCharacter(ctx, def, { dy: -0.006 * Math.sin(t * 2.4), head: 1.5 * Math.sin(t * 1.8) }, {
+    st: stl, x: ax, y: ay, S, flip: false, faceDef: faceDef(cfg.face || (line ? 'happy' : 'neutral')),
+    mouthOpen: mouth, blink: 0, t,
+  });
+  // Small vector microphone: all shapes are local code, not generated artwork.
+  ctx.save(); ctx.translate(x + w * .81, y + h * .61); ctx.rotate(-.24); ctx.fillStyle = '#c83532'; ctx.strokeStyle = '#29231f'; ctx.lineWidth = Math.max(1.5, m * .003);
+  roundRect(ctx, -m * .012, -m * .045, m * .024, m * .062, m * .012); ctx.fill(); ctx.stroke(); ctx.beginPath(); ctx.arc(0, m * .012, m * .026, 0, Math.PI); ctx.moveTo(0, m * .038); ctx.lineTo(0, m * .064); ctx.moveTo(-m * .018, m * .064); ctx.lineTo(m * .018, m * .064); ctx.stroke(); ctx.restore();
+}
+
 const CHAR_M = 1.9;
 export function drawFrame(ctx, W, H, plan, t, host) {
   const sc = plan.scene, m = Math.min(W, H);
@@ -402,6 +428,7 @@ export function drawFrame(ctx, W, H, plan, t, host) {
   if (lay) finishBackground(ctx, W, H, stl, host);
 
   // sobreposições em coordenadas de ecrã
+  if (stl.presenter) drawAvatarPresenter(ctx, W, H, plan, t, stl);
   drawCaptions(ctx, W, H, plan, t);
   if (plan.title) {
     const T2 = plan.title, lt = t - T2.at;

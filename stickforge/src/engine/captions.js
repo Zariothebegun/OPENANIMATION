@@ -1,5 +1,5 @@
 // Legendas estilo TikTok: 2-3 palavras de cada vez, palavra activa em destaque.
-import { ease, clamp, INK } from './util.js';
+import { ease, clamp, INK, roundRect } from './util.js';
 import { FONT_DISPLAY } from './props.js';
 
 // Distribui o tempo de uma linha pelas palavras (peso ~ nº de letras + pausa em pontuação).
@@ -53,6 +53,12 @@ export function drawCaptions(ctx, W, H, plan, t) {
     const ww = row.map((r) => ctx.measureText(r.w).width);
     const tw = ww.reduce((a, b) => a + b, 0) + gap * (row.length - 1);
     let x = W / 2 - tw / 2; const y = cy + (ri - (rows.length - 1) / 2) * size * 1.18;
+    if (cap.box) {
+      const pad = size * 0.24; ctx.save(); roundRect(ctx, W / 2 - tw / 2 - pad, y - size * 0.59, tw + pad * 2, size * 1.18, size * 0.2);
+      ctx.fillStyle = cap.boxColor || '#f6eddb'; ctx.fill(); ctx.lineWidth = Math.max(1.5, size * 0.035); ctx.strokeStyle = cap.boxBorder || '#29231f'; ctx.stroke();
+      if (cap.boxAccent) { roundRect(ctx, W / 2 - tw / 2 - pad, y - size * 0.59, size * 0.09, size * 1.18, size * 0.05); ctx.fillStyle = cap.boxAccent; ctx.fill(); }
+      ctx.restore();
+    }
     ctx.save(); ctx.translate(W / 2, y); ctx.scale(0.88 + 0.12 * pop, 0.88 + 0.12 * pop); ctx.translate(-W / 2, -y);
     row.forEach((r, k) => {
       const w = ch.words[r.i]; const active = t >= w.t0 && t < w.t1;

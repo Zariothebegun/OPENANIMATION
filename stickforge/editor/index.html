@@ -111,6 +111,7 @@ function renderSide() {
   el.innerHTML = `
   <h4>Vídeo</h4>
   <div class="f"><label>Formato</label><select data-m="format">${opt(cat.formats, m.format)}</select></div>
+  <div class="f"><label>Estilo</label><select data-m="style">${opt(cat.styles, m.style || 'painted')}</select></div>
   <div class="f"><label>Idioma</label><select data-m="lang">${opt(Object.keys(cat.voices), m.lang)}</select></div>
   <div class="f"><label>Voz</label><select data-m="voice">${(cat.voices[m.lang] || []).map((v) => `<option value="${v.id}" ${v.id === (m.voice || cat.voices[m.lang][0].id) ? 'selected' : ''}>${v.id} — ${v.desc}</option>`).join('')}</select></div>
   <div class="f"><label>Legendas</label><select data-m="cap"><option value="1" ${m.captions.enabled !== false ? 'selected' : ''}>ligadas</option><option value="0" ${m.captions.enabled === false ? 'selected' : ''}>desligadas</option></select></div>

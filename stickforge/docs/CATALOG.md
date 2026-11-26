@@ -1,5 +1,11 @@
 # Catálogo (gerado automaticamente por `npm run catalog` — não editar à mão)
 
+## Estilos (meta.style)
+- `flat` — FLAT — flat: plano e limpo, cores vivas
+- `painted` — PAINTED — painted: pintado: contornos grossos, sombreado, luz, vinheta e grão
+- `a3_prehistoric_cave` — A3 — Prehistoric Cave: linhas irregulares, pedra e barro, fogo e reações exageradas
+- `b5_avatar_explainer` — B5 — Avatar Explainer: papel quente, apresentador em quadro fixo e texto preto/vermelho
+
 ## Personagens (actor.char)
 - `blue` — stickman azul padrão, t-shirt azul
 - `red` — stickman vermelho enérgico
@@ -160,6 +166,12 @@
 - `kitchen` — cozinha
 - `stage` — palco com cortinas e foco de luz
 - `studio` — fundo liso de estúdio (color) com vinheta
+- `prehistoric_cave` — caverna de pedra e barro com entrada iluminada, desenhada em vetor
+- `prehistoric_campfire` — acampamento pré-histórico com fogueira e luz quente, desenhado em vetor
+- `prehistoric_outdoors` — vale pré-histórico ao amanhecer com colinas, pedras e árvores primitivas
+- `prehistoric_river` — rio pré-histórico entre margens rochosas, desenhado em vetor
+- `warm_paper` — papel marfim quente com fibras e margens leves, desenhado em vetor
+- `explainer_board` — quadro de papel com títulos, setas e formas de diagrama desenhados em vetor
 - `grid` — folha quadriculada (matemática/explicação)
 - `tech` — fundo tecnológico escuro com grelha neon
 - `gradient` — gradiente vertical (color, color2)
@@ -300,7 +312,7 @@
 - **it**: `if_sara` (femminile), `im_nicola` (maschile)
 
 ## Operações de edição
-- `set_meta` {op, meta:{format,fps,animFps,lang,voice,speed,captions:{...},transition}}
+- `set_meta` {op, meta:{format,style,fps,animFps,lang,voice,speed,captions:{...},transition}}
 - `add_scene` {op, scene:{...}, after?:sceneId|index}
 - `remove_scene` {op, id}
 - `duplicate_scene` {op, id}

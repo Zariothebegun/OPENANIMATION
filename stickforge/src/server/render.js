@@ -11,6 +11,7 @@ import { FORMATS, compileScene } from '../engine/scene.js';
 import { ensureSeq, isSet3d, SET3D_HASH } from '../set3d/prepare.js';
 import { camAt } from '../engine/cam3.js';
 import { set3dKey } from '../engine/bg3d.js';
+import { styleOf, styleName, styleBackground } from '../engine/style.js';
 
 const CACHE = path.join(ROOT, 'cache');
 // hash do código do motor: qualquer alteração ao motor invalida a cache de cenas (evita servir vídeo antigo)
@@ -35,7 +36,13 @@ export class Renderer {
    * devolve { out, timings, scenes:[{id,cached,...}] }
    */
   async render(rawProject, opts = {}) {
-    if (rawProject.meta?.engine === 'cinema') return (await import('../cinema/render.js')).renderCinema(this, rawProject, opts);
+    if (rawProject.meta?.engine === 'cinema' && !styleOf(rawProject.meta).codeOnly) return (await import('../cinema/render.js')).renderCinema(this, rawProject, opts);
+    if (styleOf(rawProject.meta).codeOnly) {
+      // Isolate code-only style adaptation to a render copy. The project saved in
+      // the editor keeps its engine and original scene backgrounds unchanged.
+      const sid = styleName(rawProject.meta);
+      rawProject = { ...rawProject, meta: { ...rawProject.meta, engine: '2d' }, scenes: (rawProject.scenes || []).map((s) => ({ ...s, bg: styleBackground(s.bg, sid) })) };
+    }
     fs.mkdirSync(path.join(CACHE, 'scenes'), { recursive: true }); fs.mkdirSync(path.join(CACHE, 'audio'), { recursive: true });
     const T0 = performance.now(); const timings = {}; const mark = (k, t) => (timings[k] = Math.round(performance.now() - t));
     const { project, errors } = normalizeProject(rawProject);

@@ -16,6 +16,10 @@ Requisitos: Node ≥ 20, Python 3, ffmpeg. **Para a IA ler: `docs/AGENT_GUIDE.md
 - **O motor é puro/isomórfico**: o mesmo código corre em Node (render) e no browser (preview do editor). As `ops` da API são as mesmas que o editor usa.
 - **Arte 100 % procedural** (16 personagens, 18 expressões, 23 animações, 47 objectos, 16 cenários, 10 transições), desenhada por código nosso → sem assets de terceiros, sem questões de licença de arte. Fontes: Anton e Inter (SIL OFL, incluídas).
 
+## Estilos 2D de código
+
+O catálogo inclui `a3_prehistoric_cave` (`A3`) e `b5_avatar_explainer` (`B5`). Ambos renderizam sem Three.js, WebGL, imagens externas ou modelos de imagem: o A3 usa cenários vetoriais de caverna, fogueira, vale e rio, roupas primitivas em código e traço irregular; o B5 usa fundo de papel texturado pré-cozido, avatar-apresentador animado e legendas em preto/vermelho. Os cenários e a textura ficam em cache para não serem reconstruídos em cada frame. O motor converte pedidos de fundo 3D ou imagem para um fundo procedural compatível quando um destes estilos está selecionado. `GET /api/catalog` expõe `styles` e `styleCards`, e o editor permite selecionar o estilo do vídeo.
+
 ## O que NÃO está feito / limites honestos
 - **Não toquei no repositório Viently**: a conta GitHub não estava ligada a esta sessão, por isso não inspeccionei `app-ios/`, o branch nem o último commit. Integração = pendente (ver abaixo).
 - **Não avaliei em profundidade** Oxframe, HyperFrames, Motion Canvas, Rive, Remotion, PixiJS, GSAP nem bibliotecas externas de personagens. Escolhi renderer próprio porque mediu rápido sem browser; **não medi** os restantes, logo não afirmo que sejam piores. Rive/Lottie podem valer a pena para personagens com arte de ilustrador.
