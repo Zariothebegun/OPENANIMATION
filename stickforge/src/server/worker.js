@@ -5,6 +5,7 @@ import path from 'node:path';
 import { createHost, loadImage } from './host.js';
 import { set3dKey } from '../engine/bg3d.js';
 import { compileScene, drawFrame } from '../engine/scene.js';
+import { makeB5Artwork } from '../engine/style-b5.js';
 
 const host = createHost();
 
@@ -18,6 +19,13 @@ function ffmpegArgs(j) {
 
 async function renderScene(j) {
   const t0 = performance.now();
+  for (const p of j.scene.props || []) if (p.kind === 'b5_art' && p.id && p.drawing) {
+    const key = `b5:${p.id}`;
+    if (host.images[key]) continue;
+    const asset = makeB5Artwork(p.drawing, p);
+    const b = asset.bounds, svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${b.width}" height="${b.height}" viewBox="${b.x} ${b.y} ${b.width} ${b.height}">${asset.svg}</svg>`;
+    host.images[key] = await loadImage(Buffer.from(svg));
+  }
   for (const p of j.plates || []) { host.set3dSeq = host.set3dSeq || {}; if (host.set3dSeq[p.key]) continue; const imgs = [], fronts = []; for (let k = 0; k < p.n; k++) { imgs.push(await loadImage(path.join(p.dir, `b_${k}.jpg`))); if (p.front) fronts.push(await loadImage(path.join(p.dir, `f_${k}.png`))); } host.set3dSeq[p.key] = { imgs, fronts: p.front ? fronts : null, n: p.n, pfps: p.pfps }; }
   const plan = compileScene(j.scene, j.meta, j.timing); plan.seqKey = j.seqKey;
   { const ks = Object.keys(host.set3dSeq || {}); while (ks.length > 3) delete host.set3dSeq[ks.shift()]; }

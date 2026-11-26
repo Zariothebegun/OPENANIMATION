@@ -3,8 +3,8 @@
 ## Estilos (meta.style)
 - `flat` — FLAT — flat: plano e limpo, cores vivas
 - `painted` — PAINTED — painted: pintado: contornos grossos, sombreado, luz, vinheta e grão
-- `a3_prehistoric_cave` — A3 — Prehistoric Cave: linhas irregulares, pedra e barro, fogo e reações exageradas
-- `b5_avatar_explainer` — B5 — Avatar Explainer: papel quente, apresentador em quadro fixo e texto preto/vermelho
+- `a3_prehistoric_cave` — A3 — Prehistoric Cave: A3 original: desenho pré-histórico 2D de contorno irregular e comédia de reação
+- `b5_avatar_explainer` — B5 — Avatar Explainer: B5 original: apresentador-avatar, desenhos em camadas e handoffs físicos
 
 ## Personagens (actor.char)
 - `blue` — stickman azul padrão, t-shirt azul
@@ -127,6 +127,7 @@
 - `linechart` — gráfico de linha: data [números]
 - `pie` — gráfico circular: data [números]
 - `image` — imagem externa (src) — requer host.images
+- `b5_art` — desenho vetorial do kit oficial B5 (drawing: phone|cup|hand|eyes|figure|dog|book|lapPose|pawContact)
 - `shape` — vector livre: paths [{t:"rect|circle|ellipse|poly|line|arc|text|curve", x,y,w,h,r,pts,fill,stroke,lw,text,size,a0,a1,at,dash}] em coords -0.5..0.5 do tamanho; "at" = segundos para aparecer, "draw":true anima o traço
 - `car_side` — carro desportivo em vista lateral (vira para a direita). params: color, wheels, jets 0..1 (gás frio dos propulsores: "down" por baixo, "rear" atrás, "roof" em cima), glow, hover (elevação 0..1)
 - `tank` — depósito/cilindro de gás comprimido (COPV, fibra de carbono). params: color, label, pressure 0..1 (cor de aviso), glow

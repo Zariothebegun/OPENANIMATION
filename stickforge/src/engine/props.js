@@ -176,6 +176,11 @@ def('pie', 'gráfico circular: data [números]', 0.3, (ctx, s, p, lt) => {
   data.forEach((v, i) => { const a1 = a0 + (v / tot) * Math.PI * 2 * k; ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, s * 0.4, a0, a1); ctx.closePath(); FS(ctx, (p.colors && p.colors[i]) || ['#4a90e2', '#e2574c', '#f2c038', '#4cb782', '#a66bff'][i % 5]); a0 = a1; });
 });
 def('image', 'imagem externa (src) — requer host.images', 0.3, (ctx, s, p, lt, host) => { const im = host && host.images && host.images[p.src]; if (im) { const r = im.width / im.height; ctx.drawImage(im, -s * 0.5 * r, -s * 0.5, s * r, s); } });
+  def('b5_art', 'desenho vetorial do kit oficial B5 (drawing: phone|cup|hand|eyes|figure|dog|book|lapPose|pawContact)', 0.35, (ctx, s, p, lt, host) => {
+  const image = host?.images?.[`b5:${p.id}`]; if (!image) return;
+  const aspect = image.width / image.height;
+  ctx.drawImage(image, -s * aspect / 2, -s / 2, s * aspect, s);
+});
 
 export const PROPS = P;
 export const PROP_DEFAULT_SIZE = (k) => (P[k] ? P[k].size : 0.2);

@@ -1,6 +1,14 @@
 # OpenAnimation / StickForge — motor para vídeos animados com IA
 
-Motor 2D e cinema 3D + projectos em JSON + editor web + API para um agente de IA. O agente cria o storyboard, escolhe bibliotecas e pode escrever hooks de código para construir/animação por cena. O motor trata de personagens 2D em mundos 3D, voz, boca, legendas, câmara, transições e render.
+Motor 2D e cinema 3D + projectos em JSON + biblioteca web + editor + API local. A página inicial da biblioteca é `site/index.html`; o editor técnico continua em `/editor`. A seleção inicial do site contém Stick (o estilo `painted` existente), A3 Prehistoric Cave e B5 Avatar Explainer.
+
+### Perfis A3/B5 importados
+
+Os perfis oficiais e o kit B5 estão em `styles/upstream/`, com a licença MIT. O A3 de origem pertence ao Model Engine e a renderização local é explicitamente uma adaptação 2D. O kit B5 é carregado no motor: um prop `{kind:"b5_art", drawing:"phone|cup|hand|eyes|figure|dog|book|lapPose|pawContact"}` usa os desenhos SVG, bounds e helpers originais; um apresentador tem de ser fornecido/aprovado, não é inventado pelo motor. Amostras oficiais dos estilos estão em `assets/styles/official/` para a biblioteca.
+
+### Geração pelo site
+
+A biblioteca pede o storyboard à ponte local Gemini em `http://127.0.0.1:8787/v1/chat/completions`, guarda o JSON em `PUT /api/project` e começa o render local com `POST /api/render`; acompanha `GET /api/job/:id`. Inicia primeiro a ponte descrita em `docs/BRIDGE-API.md` e depois `npm start`. A ponte desligada não bloqueia o editor nem a API de render local.
 
 ```
 bash scripts/setup.sh      # npm install + Kokoro (voz) + modelos
@@ -14,11 +22,11 @@ Requisitos: Node ≥ 20, Python 3, ffmpeg. **Para a IA ler: `docs/AGENT_GUIDE.md
 - **Voz Kokoro (ONNX)** em pool de processos persistentes, em paralelo por fala e com cache em disco.
 - O render de cada cena começa assim que a voz dessa cena está pronta (pipeline). Duração da cena = duração real da voz (quantizada a 1/15 s), boca sincronizada pelo envelope de energia do áudio.
 - **O motor é puro/isomórfico**: o mesmo código corre em Node (render) e no browser (preview do editor). As `ops` da API são as mesmas que o editor usa.
-- **Arte 100 % procedural** (16 personagens, 18 expressões, 23 animações, 47 objectos, 16 cenários, 10 transições), desenhada por código nosso → sem assets de terceiros, sem questões de licença de arte. Fontes: Anton e Inter (SIL OFL, incluídas).
+- **O estilo Stick usa a biblioteca procedural existente** (personagens, expressões, animações, objectos e cenários). A3 é uma adaptação local do perfil original; B5 integra o kit vetorial upstream com licença MIT. As fontes Anton e Inter têm licença SIL OFL.
 
 ## Estilos 2D de código
 
-O catálogo inclui `a3_prehistoric_cave` (`A3`) e `b5_avatar_explainer` (`B5`). Ambos renderizam sem Three.js, WebGL, imagens externas ou modelos de imagem: o A3 usa cenários vetoriais de caverna, fogueira, vale e rio, roupas primitivas em código e traço irregular; o B5 usa fundo de papel texturado pré-cozido, avatar-apresentador animado e legendas em preto/vermelho. Os cenários e a textura ficam em cache para não serem reconstruídos em cada frame. O motor converte pedidos de fundo 3D ou imagem para um fundo procedural compatível quando um destes estilos está selecionado. `GET /api/catalog` expõe `styles` e `styleCards`, e o editor permite selecionar o estilo do vídeo.
+O catálogo mantém `a3_prehistoric_cave` (`A3`) e `b5_avatar_explainer` (`B5`) separados do estilo Stick. A3 no renderer local é uma adaptação 2D do perfil do Model Engine; não promete a qualidade ou geração de vídeo do modelo original. B5 usa desenhos e helpers do kit upstream e aceita `b5_art` como prop; uma imagem de apresentador aprovada tem de ser fornecida, o motor não inventa uma identidade. O motor converte pedidos de fundo 3D ou imagem para fundos 2D quando A3 ou B5 está selecionado. `GET /api/catalog` expõe `styles`, `styleCards` e os helpers disponíveis.
 
 ## O que NÃO está feito / limites honestos
 - **Não toquei no repositório Viently**: a conta GitHub não estava ligada a esta sessão, por isso não inspeccionei `app-ios/`, o branch nem o último commit. Integração = pendente (ver abaixo).

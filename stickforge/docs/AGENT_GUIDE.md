@@ -11,7 +11,7 @@ Lista completa de valores válidos: `docs/CATALOG.md` (ou `GET /api/catalog`). *
 3. `POST /api/render {"quality":"draft"}` → pré-visualização; depois `"standard"` ou `"high"` para a versão final.
 4. Alterações do utilizador ("troca a personagem", "muda o cenário da cena 3", "reescreve a fala 2") → **só `POST /api/ops`**, sem regenerar o projecto completo. O cache permite refazer apenas as cenas alteradas; o tempo depende do equipamento, qualidade e complexidade.
 
-O editor web (`/`) mostra as alterações em directo (poll de 1 s), por isso o utilizador vê a IA a editar.
+O site `/` é a biblioteca visual; o editor técnico está em `/editor`. A biblioteca pede storyboard à Gemini Bridge local conforme `docs/BRIDGE-API.md`; a ponte desligada impede a geração por IA, mas a API local continua separada.
 
 ## Estrutura
 
@@ -99,8 +99,8 @@ Exemplos:
 
 ## Ensinar temas novos (liberdade criativa)
 
-- **Estilos** (`meta.style`): `painted` ou `flat` (originais), `a3_prehistoric_cave` / `A3` e `b5_avatar_explainer` / `B5`. A3 usa cavernas, fogueiras, vales e rios desenhados em vetor; B5 usa papel texturado, um avatar apresentador animado e legendas em preto/vermelho. A3 e B5 são sempre 2D/code-only: o motor substitui fundos 3D/imagem por cenários vetoriais locais e não chama geradores de imagem.
-- Para o estilo A3, usa fundos `prehistoric_cave`, `prehistoric_campfire`, `prehistoric_outdoors` e `prehistoric_river`. Para B5, usa `warm_paper` e `explainer_board` (ou `grid`, `room`, `office`, `classroom`). O catálogo/API publica `styleCards` com nome, código, guia de realização, miniatura vetorial e requisitos para os cartões de seleção da app. A adaptação 2D acontece numa cópia temporária durante validação/render; o projeto guardado e os estilos antigos permanecem intactos.
+- **Estilos** (`meta.style`): `painted`/`stick` (o estilo Stick original), `flat`, `a3_prehistoric_cave` / `A3` e `b5_avatar_explainer` / `B5`. A3 local é apenas uma adaptação 2D do perfil oficial do Model Engine, não reproduz o vídeo gerado pelo modelo original. B5 usa o kit vetorial upstream de `styles/upstream/b5-art-kit.cjs`; props suportados: `phone`, `cup`, `hand`, `eyes`, `figure`, `dog`, `book`, `lapPose`, `pawContact`. B5 não inventa avatar de apresentador: só usar imagem escolhida/fornecida e aprovada.
+- Para A3, usa fundos `prehistoric_cave`, `prehistoric_campfire`, `prehistoric_outdoors` e `prehistoric_river`. Para B5, usa `warm_paper` e `explainer_board`; props `b5_art` precisam de `id` único e campo `drawing`. A API publica `styleCards`; os desenhos e helpers B5 ficam em `styleArtKits`. A3/B5 convertem fundos 3D para a opção 2D compatível; Stick continua independente.
 - **Cenários**: usa uma predefinição (`launch_night`, `desert_dusk`, `highway`, `garage`, `blueprint`, `sky_day`, `space_dark`, `lab_dark`) ou compõe um com `{"kind":"scenic","sky":[[0,"#..."],[1,"#..."]],"ground":0.66,"groundColor":"#...","layers":[{"t":"stars"},{"t":"sun",...},{"t":"mountains",...},{"t":"city"}],"front":[{"t":"road"}]}`. Camadas: stars, glow, sun, moon, clouds, mountains, hills, dunes, city, rect, haze, grid, road, lights, stripes, floorgrid, blueprint.
 - **Diagramas à medida**: prop `shape` com `paths` (rect, circle, ellipse, poly, line com `arrow`, curve, arc, text) em coordenadas −0.5..0.5, cada uma com `at` (aparece) e `draw:true` (traço animado). É assim que desenhas qualquer esquema que o catálogo não tenha.
 - **Parâmetros de props** vão no próprio objecto ou em `"p":{...}`.

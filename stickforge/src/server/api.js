@@ -16,7 +16,7 @@ fs.mkdirSync(path.dirname(STATE_FILE), { recursive: true });
 const state = { project: fs.existsSync(STATE_FILE) ? JSON.parse(fs.readFileSync(STATE_FILE, 'utf8')) : JSON.parse(fs.readFileSync(path.join(ROOT, 'examples/ram.json'), 'utf8')), version: 1 };
 const save = () => { state.version++; fs.writeFileSync(STATE_FILE, JSON.stringify(state.project, null, 2)); };
 const renderer = new Renderer(); const jobs = new Map(); let jobSeq = 0;
-const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.json': 'application/json', '.ttf': 'font/ttf', '.otf': 'font/otf', '.mp4': 'video/mp4', '.wav': 'audio/wav', '.png': 'image/png', '.css': 'text/css' };
+const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.json': 'application/json', '.ttf': 'font/ttf', '.otf': 'font/otf', '.mp4': 'video/mp4', '.gif': 'image/gif', '.wav': 'audio/wav', '.png': 'image/png', '.css': 'text/css' };
 const body = (req) => new Promise((res) => { let b = ''; req.on('data', (c) => (b += c)); req.on('end', () => { try { res(b ? JSON.parse(b) : {}); } catch { res({ __bad: true }); } }); });
 const send = (res, code, obj) => { res.writeHead(code, { 'content-type': 'application/json', 'access-control-allow-origin': '*' }); res.end(JSON.stringify(obj)); };
 function serve(res, file, req) {
@@ -30,7 +30,9 @@ http.createServer(async (req, res) => {
   const u = new URL(req.url, 'http://x'); const p = u.pathname;
   try {
     if (req.method === 'OPTIONS') { res.writeHead(204, { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': '*' }); return res.end(); }
-    if (p === '/' || p === '/editor') return serve(res, path.join(ROOT, 'editor/index.html'));
+    if (p === '/') return serve(res, path.join(ROOT, 'site/index.html'));
+    if (p === '/editor') return serve(res, path.join(ROOT, 'editor/index.html'));
+    if (p === '/library') return serve(res, path.join(ROOT, 'site/index.html'));
     if (p.startsWith('/engine/')) return serve(res, path.join(ROOT, 'src', p));
     if (p.startsWith('/assets/')) return serve(res, path.join(ROOT, p));
     if (p.startsWith('/cache/tts/')) return serve(res, path.join(ROOT, p));
